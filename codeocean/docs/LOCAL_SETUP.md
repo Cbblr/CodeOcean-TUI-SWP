@@ -4,6 +4,15 @@ CodeOcean is built as a micro service architecture and requires multiple compone
 
 We recommend using the **native setup** as described below. We also prepared a setup with Vagrant using a virtual machine as [described in this guide](./LOCAL_SETUP_VAGRANT.md). However, the Vagrant setup might be outdated and is not actively maintained (PRs are welcome though!)
 
+If there are any issues with the installation on a device running macOS, please check [macOS Troubleshooting](#macos-troubleshooting) for a solution.
+
+## Table of Contents
+- [Native setup for CodeOcean](#native-setup-for-codeocean)
+- [macOS Troubleshooting](#macos-troubleshooting)
+- [Native setup for Nomand](#native-setup-for-nomand)
+- [Native Setup for Poseidon](#native-setup-for-poseidon) 
+
+
 ## Native setup for CodeOcean
 
 Follow these steps to set up CodeOcean on macOS or Linux for development purposes:
@@ -29,6 +38,14 @@ sudo apt-get -y install git ca-certificates curl libpq-dev libicu-dev
 brew install postgresql@15
 brew services start postgresql@15 
 ```
+
+**Check with:** 
+
+Check where postgres is located on your device using the following command:
+```shell
+locate bin/postgres
+```
+Now, copy the last line, that tells you where postgres is located and replace `/postgres` with `/pg_isready` and insert this as a command.
 
 **Linux:**
 ```shell
@@ -81,9 +98,8 @@ Add the following lines to your profile. (e.g., `~/.zshrc`):
 
 ```shell
 # NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$(brew --prefix nvm)/nvm.sh" ] && \. "$(brew --prefix nvm)/nvm.sh"  # This loads nvm
-[ -s "$(brew --prefix nvm)/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix nvm)/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ```
 
 **Linux:**
@@ -224,6 +240,47 @@ For exporting metrics, enable the Prometheus exporter in `config/code_ocean.yml`
 
 ```shell
 bundle exec prometheus_exporter
+```
+
+## macOS Troubleshooting
+
+### Problems with *bundle install* 
+
+#### *An error occurred while installing pg (1.4.6), and Bundler cannot continue.*
+
+```shell
+brew install libpq
+```
+
+Now, check where postgres is located on your device using the following command:
+```shell
+locate bin/postgres
+```
+
+Next, copy the last line that tells you where postgres is located and replace `/postgre` with `/pg_config` and insert this line at the back of the following command: 
+```shell
+gem install pg  — —with-pg-config=/
+``` 
+
+#### *An error occurred while installing mimemagic (0.4.3), and Bundler cannot continue.*
+
+```shell
+brew install shared-mime-info
+gem install mimemagic -v '0.3.10' --source 'https://rubygems.org/'
+```
+
+#### *An error occurred while installing eventmachine (1.2.7), and Bundler cannot continue.*
+
+There are two possible ways to fix this. 
+First, try the following command: 
+```shell
+gem install eventmachine -v '1.2.7' -- --with-cppflags=-I/usr/local/opt/openssl/include
+```
+
+In case this does not work, try the following combination of commands: 
+```shell
+brew install openssl
+gem install eventmachine -v '1.2.7' -- --with-cppflags=-I/usr/local/opt/openssl/include
 ```
 
 ## Native Setup for Nomad
