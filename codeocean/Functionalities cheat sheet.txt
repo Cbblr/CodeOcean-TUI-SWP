@@ -59,3 +59,27 @@ Grundsätzlicher Ablauf:
     Der ExerciseExecutionsController speichert die Ausgabe in der Datenbank und gibt sie an die show-Methode weiter.
 
     Die show-Methode gibt die Ausgabe an die Vorlage exercise_executions/show.html.erb weiter, die die Darstellung der Ausgabe auf der Webseite steuert.
+
+
+    Der "App" Ordner:
+    controllers: Enthält die Controller-Klassen, die die Logik der Anwendung steuern, indem sie Anforderungen von Routen entgegennehmen und Daten an die Views und Models 
+    weitergeben. Einige wichtige Dateien sind:
+        application_controller.rb: Der Stamm-Controller, von dem alle anderen Controller-Klassen erben. Enthält Methoden, die in allen Controllern verwendet werden können.
+        exercises_controller.rb: Steuert die Anzeige, das Erstellen und die Ausführung von Übungen.
+        exercise_executions_controller.rb: Steuert die Anzeige von Ausführungen von Übungen.
+
+    models: Enthält die Model-Klassen, die die Datenbank-Tabellen und -Spalten darstellen und Methoden zur Abfrage und Manipulation der Datenbank bereitstellen. Einige
+    wichtige Dateien sind:
+        exercise.rb: Das Modell, das die Übungsentitäten repräsentiert.
+        exercise_execution.rb: Das Modell, das die Ausführungsentitäten von Übungen repräsentiert.
+        user.rb: Das Modell, das die Benutzerentitäten repräsentiert.
+
+    views: Enthält die Vorlagen-Dateien, die das Aussehen der Anwendung steuern. Sie verwenden HTML, CSS und Ruby-Code, um die von den Controllern bereitgestellten Daten
+    anzuzeigen. Einige wichtige Dateien sind:
+        exercises/index.html.erb: Die Vorlage, die die Übungsliste anzeigt.
+        exercises/show.html.erb: Die Vorlage, die eine einzelne Übung anzeigt.
+        exercise_executions/show.html.erb: Die Vorlage, die die Ausgabe einer Übungsausführung anzeigt.
+
+    helpers: Enthält die Helper-Module, die in den Vorlagen verwendet werden können, um häufig verwendete Funktionen bereitzustellen.
+
+    assets: Enthält statische Ressourcen wie Bilder, JavaScript- und CSS-Dateien.
