@@ -1,21 +1,27 @@
 # Local Setup CodeOcean with Poseidon
 
+**This Setup Guide is an adapted version of the original Local Setup Guide provided by the creators of CodeOcean. It contains several sections, that have been revised to simplify the installation on devices running macOS. Additionally, a Local Setup Guide for devices running on Windows has been added. Those parts, that are describing the installation on devices running on Linux, have not been adapted.**
+
 CodeOcean is built as a micro service architecture and requires multiple components to work. Besides the main CodeOcean web application with a PostgreSQL database, a custom-developed Go service called [Poseidon](https://github.com/openHPI/poseidon) is required to allow code execution. Poseidon manages so-called Runners, which are responsible for running learners code. It is executed in (Docker) containers managed through Nomad. The following document will guide you through the setup of CodeOcean with all aforementioned components.
 
 We recommend using the **native setup** as described below. We also prepared a setup with Vagrant using a virtual machine as [described in this guide](./LOCAL_SETUP_VAGRANT.md). However, the Vagrant setup might be outdated and is not actively maintained (PRs are welcome though!)
 
 If there are any issues with the installation on a device running macOS, please check [macOS Troubleshooting](#macos-troubleshooting) for a solution.
 
+For those, that would like to install CodeOcean on a device running Windows, without having to install a virtual machine, can follow the [Local Setup CodeOcean with Poseidon for Windows](./LOCAL_SETUP_WINDOWS.md).
+
 ## Table of Contents
-- [Native setup for CodeOcean](#native-setup-for-codeocean)
-- [macOS Troubleshooting](#macos-troubleshooting)
-- [Native setup for Nomand](#native-setup-for-nomand)
+- [Native Setup for CodeOcean](#native-setup-for-codeocean)
+  - [macOS Troubleshooting](#macos-troubleshooting)
+- [Native Setup for Nomand](#native-setup-for-nomand)
 - [Native Setup for Poseidon](#native-setup-for-poseidon) 
 
-
-## Native setup for CodeOcean
+&nbsp;
+## Native Setup for CodeOcean
 
 Follow these steps to set up CodeOcean on macOS or Linux for development purposes:
+
+&nbsp;
 
 ### Install required dependencies:
 
@@ -30,6 +36,8 @@ brew install --cask firefox
 sudo apt-get update
 sudo apt-get -y install git ca-certificates curl libpq-dev libicu-dev
 ```
+
+&nbsp;
 
 ### Install PostgreSQL 15:
 
@@ -60,6 +68,8 @@ sudo -u postgres createuser $(whoami) -ed
 pg_isready
 ```
 
+&nbsp;
+
 ### Install RVM:
 
 We recommend using the [Ruby Version Manager (RVM)](https://www.rvm.io) to install Ruby.
@@ -83,6 +93,8 @@ If you are not in a login shell, RVM will not work as expected. Follow the [RVM 
 ```shell
 rvm -v
 ```
+
+&nbsp;
 
 ### Install NVM:
 
@@ -112,6 +124,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 nvm -v
 ```
 
+&nbsp;
+
 ### Install NodeJS 18 and Yarn:
 
 Reload your shell (e.g., by closing and reopening the terminal) and continue with installing Node:
@@ -127,6 +141,7 @@ node -v
 yarn -v
 ```
 
+&nbsp;
 ### Clone the repository:
 
 You may either clone the repository via SSH (recommended) or HTTPS (hassle-free for read operations). If you haven't set up GitHub with your SSH key, you might follow [their official guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
@@ -141,6 +156,8 @@ git clone git@github.com:openHPI/codeocean.git
 git clone https://github.com/openHPI/codeocean.git
 ```
 
+&nbsp;
+
 ### Switch current working directory
 
 This guide focuses on CodeOcean, as checked out in the previous step. Therefore, we are switching the working directory in the following. For Poseidon, please follow the [dedicated setup guide for Poseidon](https://github.com/openHPI/poseidon/blob/main/docs/development.md).
@@ -148,6 +165,8 @@ This guide focuses on CodeOcean, as checked out in the previous step. Therefore,
 ```shell
 cd codeocean
 ```
+
+&nbsp;
 
 ### Install Ruby:
 
@@ -159,6 +178,8 @@ rvm install $(cat .ruby-version)
 ```shell
 ruby -v
 ```
+
+&nbsp;
 
 ### Create all necessary config files:
 
@@ -242,10 +263,12 @@ For exporting metrics, enable the Prometheus exporter in `config/code_ocean.yml`
 bundle exec prometheus_exporter
 ```
 
-## macOS Troubleshooting
+&nbsp;
+### **macOS Troubleshooting**
 
 ### Problems with *bundle install* 
 
+&nbsp;
 #### *An error occurred while installing pg (1.4.6), and Bundler cannot continue.*
 
 ```shell
@@ -262,6 +285,7 @@ Next, copy the last line that tells you where postgres is located and replace `/
 gem install pg  — —with-pg-config=/
 ``` 
 
+&nbsp;
 #### *An error occurred while installing mimemagic (0.4.3), and Bundler cannot continue.*
 
 ```shell
@@ -269,6 +293,7 @@ brew install shared-mime-info
 gem install mimemagic -v '0.3.10' --source 'https://rubygems.org/'
 ```
 
+&nbsp;
 #### *An error occurred while installing eventmachine (1.2.7), and Bundler cannot continue.*
 
 There are two possible ways to fix this. 
@@ -283,10 +308,12 @@ brew install openssl
 gem install eventmachine -v '1.2.7' -- --with-cppflags=-I/usr/local/opt/openssl/include
 ```
 
+&nbsp;
 ## Native Setup for Nomad
 
 As detailed earlier, this guide focuses on CodeOcean. Nevertheless, the following provides a short overview of the most important steps to get started with Nomad (as required for Poseidon). Please refer to the [full setup guide](https://github.com/openHPI/poseidon/blob/main/docs/development.md) for more details.
 
+&nbsp;
 ### Install Nomad
 
 **macOS:**
@@ -307,11 +334,15 @@ sudo systemctl start nomad
 **Check with:**  
 Open your web browser at <http://localhost:4646>
 
+&nbsp;
+
 ### Enable Memory Oversubscription for Nomad
 
 ```shell
 curl -X POST -d '{"SchedulerAlgorithm": "spread", "MemoryOversubscriptionEnabled": true}' http://localhost:4646/v1/operator/scheduler/configuration 
 ```
+
+&nbsp;
 
 ### Install Docker
 
@@ -331,9 +362,13 @@ curl -fsSL https://get.docker.com | sudo sh
 docker -v
 ```
 
+&nbsp;
+
 ## Native Setup for Poseidon
 
 As detailed earlier, this guide focuses on CodeOcean. Nevertheless, the following provides a short overview of the most important steps to get started with Poseidon. Please refer to the [full setup guide](https://github.com/openHPI/poseidon/blob/main/docs/development.md) for more details.
+
+&nbsp;
 
 ### Install Go
 
@@ -355,6 +390,8 @@ sudo apt-get update && sudo apt-get -y install golang
 go version
 ```
 
+&nbsp;
+
 ### Clone the repository:
 
 You may either clone the repository via SSH (recommended) or HTTPS (hassle-free for read operations). If you haven't set up GitHub with your SSH key, you might follow [their official guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
@@ -369,11 +406,14 @@ git clone git@github.com:openHPI/poseidon.git
 git clone https://github.com/openHPI/poseidon.git
 ```
 
+&nbsp;
 ### Switch current working directory
 
 ```shell
 cd poseidon
 ```
+
+&nbsp;
 
 ### Install required project libraries
 
@@ -381,11 +421,15 @@ cd poseidon
 make bootstrap
 ```
 
+&nbsp;
+
 ### Build the binary
 
 ```shell
 make build
 ```
+
+&nbsp;
 
 ### Create the config file:
 
@@ -396,6 +440,8 @@ cp configuration.example.yaml configuration.yaml
 ```
 
 Then, you should check the config file manually and adjust settings where necessary for your environment.
+
+&nbsp;
 
 ### Run Poseidon
 
