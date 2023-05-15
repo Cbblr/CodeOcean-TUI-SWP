@@ -5,12 +5,16 @@ class PyUnitAdapter < TestingFrameworkAdapter
   FAILURES_REGEXP = /FAILED \(.*failures=(\d+).*\)/
   ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
   ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\s((\s|\S)*?)(>>>[^>]*?)*\s\s(-|=){70}/m
+  #regex to catch bad errors hindering code execution
+  BAD_ERROR_REGEXP = /(SyntaxError|IndentationError|TabError):(.*)/
+  #File\s\"(.*)\"(?:.*)line\s(\d+)\n(?:.*)\s*(?:\^*)\n(SyntaxError|IndentationError|TabError):(.*)
 
   def self.framework_name
     'PyUnit'
   end
 
   def parse_output(output)
+    File.write("outputtest.txt",output[:stderr])
     # PyUnit is expected to print test results on Stderr!
     count = output[:stderr].scan(COUNT_REGEXP).try(:last).try(:first).try(:to_i) || 0
     failed = output[:stderr].scan(FAILURES_REGEXP).try(:last).try(:first).try(:to_i) || 0
@@ -32,6 +36,23 @@ class PyUnitAdapter < TestingFrameworkAdapter
       Sentry.capture_message({stderr: output[:stderr], regex: ASSERTION_ERROR_REGEXP}.to_json)
       assertion_error_matches = []
     end
-    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank}
+    #catch bad errors here
+    begin
+      bad_error_matches = Timeout.timeout(2.seconds) do
+        output[:stderr].scan(BAD_ERROR_REGEXP).map do |match|
+          #example for a match ["SyntaxError", "invalid syntax"]
+          error_name=match[0]
+          error_message=match[1].strip
+
+          "#{error_name}: #{error_message}"
+        end || []
+      end
+    rescue Timeout::Error
+      Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
+      bad_error_matches = []
+    end
+    File.write("RegExTest.txt",bad_error_matches)
+    File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
+    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_messages: bad_error_matches}
   end
 end
