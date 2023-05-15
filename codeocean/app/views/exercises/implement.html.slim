@@ -5,25 +5,6 @@
 
 // col-md-12 required for CodePilot
 #editor-column.col-md-12
-  - unless @embed_options[:hide_exercise_description]
-    .exercise.clearfix
-      div
-        span.badge.rounded-pill.bg-primary.float-end.score
-
-        h1 id="exercise-headline"
-          i id="description-symbol" class=(@embed_options[:collapse_exercise_description] ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-down')
-          = @exercise.title
-
-      #description-card.lead class=(@embed_options[:collapse_exercise_description] ? 'description-card-collapsed' : 'description-card')
-        = render_markdown(@exercise.description)
-
-      a#toggle href="#" data-show=t('shared.show') data-hide=t('shared.hide')
-        - if @embed_options[:collapse_exercise_description]
-          = t('shared.show')
-        - else
-          = t('shared.hide')
-
-
   = render('editor', exercise: @exercise, files: @files, submission: @submission)
 
 - if qa_url
