@@ -1,6 +1,8 @@
 ## reguläre Ausdrücke des pyunit adapters
 
-Die folgenden RegEx enthalten alle mindestens eine “capturing group”. Die Muster, die in diesen Gruppen (innerhalb des Regex) definiert sind, können später als konkreter Wert extrahiert und somit weiterverwendet werden. "(\d+)" im COUNT_REGEXP definiert bspw. ein Muster, das eine oder mehrere Zahlen enthält. der konkrete Zahlenwert kann dann später für jeden gefunden match ausgelesen werden. (Ohne die restlichen Filterelemente des RegEx).
+### Erläuterung und Beispiele für bestehende reguläre Ausdrücke
+
+Die folgenden RegEx enthalten alle mindestens eine “capturing group”. Die Muster, die in diesen Gruppen (innerhalb des Regex) definiert sind, können später als konkreter Wert extrahiert und somit weiterverwendet werden. "(\d+)" im COUNT_REGEXP definiert bspw. ein Muster, das eine oder mehrere Zahlen enthält. der konkrete Zahlenwert kann dann später für jeden gefunden match ausgelesen werden. 
 Dazu wird in unserem Fall nach der Deklaration die _scan Methode_ verwendet. Diese filtert (im Gegensatz zur match Methode) für _jedes_ match die konkreten Werte der entsprechenden Capturing Group heraus und schreibt diese in ein Array. 
 
 #### RegEx: COUNT_REGEXP (1)
@@ -9,7 +11,7 @@ COUNT_REGEXP = /Ran (\d+) test/
 ```
 * filtert nach Textabschnitten, die das Muster "Ran " gefolgt von einer oder mehr Ziffern und dann " test" enthalten.
 * (Die Klammern um \d+ legen eine sogenannte "capturing group" fest, die das Muster von min. einer oder mehr Ziffern enthält. Diese Gruppe kann später in der Verarbeitung des Treffers verwendet werden, um den genauen Wert der Ziffern zu extrahieren.
-* Durch die folgende Scan Methode wird hier also schlichtweg die Anzahl der durchlaufenen Test gefiltert? ... Hatten wir ja auch anhand des Namen vermutet.) 
+* Durch die folgende Scan Methode wird hier also die Anzahl der durchlaufenen Test gefiltert
 
 **--> Anzahl der durchgeführten Test**
 
@@ -30,12 +32,9 @@ FAILURES_REGEXP =/FAILED \(.*failures=(\d+).*\)/
 ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
 ```
 * identisch mit vorhergehenden aber errors= anstelle von failures= 
-* daher: Anzahl der aufgetretenen Errors wird erfasst??
+* daher: Anzahl der aufgetretenen Errors wird erfasst
 
 **--> Anzahl der aufgetretenen Errors**
-```ruby
-ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
-```
 
 #### RegEx: ASSERTION_ERROR_REGEXP (4)
 ```ruby
@@ -55,7 +54,7 @@ ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\
 * 
 #### Interpretation in Bezug auf die Konsolenausgabe 
 (zu Testzwecken anhand der Aufgabe: WIDIG01_Hangman)
-Da wir ja vermutet hatten, dass die Konsolenausgabe vielleicht schon unseren Rohdaten (bzw. output) vollständig oder zu entscheidenden Teilen entspricht habe ich mal nach meinen Interpretationen der 4 RegEx in benannter Ausgabe gesucht und fand folgende Stellen spannend:
+Beispiele aus der Konsolenausgabe, die auf die zuvor beschriebenen RegEx matchen:
 **zu (1):** z.B.: "Ran 1 test in 0.003s", "Ran 6 tests in 0.014s" etc.
 **zu (2):** z.B: "FAILED (failures=6)", "FAILED (failures=2)" etc.
 **zu (4):** z.B. 
@@ -63,10 +62,8 @@ Da wir ja vermutet hatten, dass die Konsolenausgabe vielleicht schon unseren Roh
 FAIL: test_correct_letter_input (test_main.Main)
 \---------------------------------------------------------------------- 
 
-(Ja das sind 70 Minus - hab es gezählt - spaßiger Mittwoch Abend hier...)
-
 ======================================================================
 FAIL: test_incorrect_word_input (test_main.Main)
 \----------------------------------------------------------------------
-Mir scheint also hier wird der Text(name), das Testfile (deckt sich mit den Titeln der Boxen oben) und ob ein Error oder Fail vorliegt gefiltert 
+
 
