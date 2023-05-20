@@ -8,24 +8,6 @@
 
 #editor.layout-container.row data-exercise-id=@exercise.id data-message-depleted=t('exercises.editor.depleted') data-message-timeout=t('exercises.editor.timeout',  permitted_execution_time: @exercise.execution_environment.permitted_execution_time) data-message-out-of-memory=t('exercises.editor.out_of_memory',  memory_limit: @exercise.execution_environment.memory_limit) data-submissions-url=submissions_path data-user-id=current_user.id data-user-external-id=external_user_external_id data-working-times-url=working_times_exercise_path(@exercise) data-intervention-save-url=intervention_exercise_path(@exercise) data-rfc-interventions=show_rfc_interventions data-break-interventions=show_break_interventions data-tips-interventions=show_tips_interventions data-course_token=@course_token data-search-save-url=search_exercise_path(@exercise)
   .layout-sidebar
-    - unless @embed_options[:hide_exercise_description]
-      .exercise.clearfix.row
-        div
-          span.badge.rounded-pill.bg-primary.float-end.score
-
-          h1 id="exercise-headline"
-            i id="description-symbol" class=(@embed_options[:collapse_exercise_description] ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-down')
-            = @exercise.title
-
-        #description-card.lead class=(@embed_options[:collapse_exercise_description] ? 'description-card-collapsed' : 'description-card')
-          = render_markdown(@exercise.description)
-
-        a#toggle href="#" data-show=t('shared.show') data-hide=t('shared.hide')
-          - if @embed_options[:collapse_exercise_description]
-            = t('shared.show')
-          - else
-            = t('shared.hide') 
-
     - unless @embed_options[:hide_sidebar]
       - additional_classes = 'sidebar-col row'
       - if @tips.blank?
@@ -34,7 +16,7 @@
       - else
         - additional_classes = 'sidebar-col w-25 row'
       div id="sidebar" class=additional_classes = render('editor_file_tree', exercise: @exercise, files: @files)
-
+        
 
   div.col.p-0.layout-content id='frames'
     
