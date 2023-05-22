@@ -535,6 +535,10 @@ var CodeOceanEditor = {
     },
 
     populateCard: function (card, result, index) {
+        card.find('.card-header').on('click', ()=>{
+            card.find('.card-body').toggleClass('d-none');
+            card.find('i').toggleClass('fa-chevron-down fa-chevron-right')
+        });
         card.addClass(this.getCardClass(result));
         card.find('.card-title .filename').text(result.filename);
         card.find('.card-title .number').text(index + 1);
