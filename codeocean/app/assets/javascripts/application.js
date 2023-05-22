@@ -24,3 +24,5 @@
 //
 // app/assets
 //= require_tree .
+//
+//= require showdown
