@@ -7,6 +7,7 @@ class PyUnitAdapter < TestingFrameworkAdapter
   ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\s((\s|\S)*?)(>>>[^>]*?)*\s\s(-|=){70}/m
   #regex to catch bad errors hindering code execution
   BAD_ERROR_REGEXP = /(SyntaxError|IndentationError|TabError):(.*)/
+  FILE_LINE_SCAN = /File\s\"(.*)\"(?:.*)line\s(\d+)\s/
   #File\s\"(.*)\"(?:.*)line\s(\d+)\n(?:.*)\s*(?:\^*)\n(SyntaxError|IndentationError|TabError):(.*)
 
   def self.framework_name
@@ -43,7 +44,6 @@ class PyUnitAdapter < TestingFrameworkAdapter
           #example for a match ["SyntaxError", "invalid syntax"]
           error_name=match[0]
           error_message=match[1].strip
-
           "#{error_name}: #{error_message}"
         end || []
       end
@@ -51,8 +51,21 @@ class PyUnitAdapter < TestingFrameworkAdapter
       Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
       bad_error_matches = []
     end
-    File.write("RegExTest.txt",bad_error_matches)
+    begin
+      line_matches = Timeout.timeout(2.seconds) do
+        output[:stderr].scan(FILE_LINE_SCAN).map do |match|
+          #example for a match ["SyntaxError", "invalid syntax"]
+          file_name=match[0]
+          line_number=match[1].strip
+          " in #{file_name} line #{line_number}"
+        end || []
+      end
+    rescue Timeout::Error
+      Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
+      bad_error_matches = []
+    end
+    File.write("RegExTest.txt",bad_error_matches[0]+line_matches[0])
     File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
-    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_messages: bad_error_matches}
+    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_message: (bad_error_matches[0]+line_matches[0])}
   end
 end
