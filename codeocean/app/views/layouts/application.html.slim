@@ -1,5 +1,6 @@
 doctype html
-html lang="#{I18n.locale || I18n.default_locale}" data-default-locale="#{I18n.default_locale}"
+html lang="#{I18n.locale || I18n.default_locale}" data-default-locale="#{I18n.default_locale}" data-bs-theme="grey"
+
   head
     meta charset='utf8'
     meta name='viewport' content='width=device-width, initial-scale=1'
@@ -29,6 +30,14 @@ html lang="#{I18n.locale || I18n.default_locale}" data-default-locale="#{I18n.de
           #navbar-collapse.collapse.navbar-collapse
             = render('navigation', cached: true)
             ul.nav.navbar-nav.ms-auto
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle href='#' role='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
+                  i.fa-solid.fa-adjust
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item href='#'
+                    | Light Mode
+                  a.dropdown-item href='#'
+                    | Dark Mode
               = render('locale_selector', cached: true)
               li.nav-item.me-3 = link_to(t('shared.help.link'), '#modal-help', data: {'bs-toggle': 'modal'}, class: 'nav-link')
               = render('session')
