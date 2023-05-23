@@ -9,6 +9,23 @@ div.d-grid.gap-2 id='sidebar-collapsed' class=(@exercise.hide_file_tree && @tips
 
 div.d-grid.enforce-bottom-margin id='sidebar-uncollapsed' class=(@exercise.hide_file_tree && @tips.blank? ? 'd-none' : '')
   = render('editor_button', classes: 'btn-outline-dark overflow-hidden mb-2', icon: 'fa-solid fa-square-minus', id: 'sidebar-collapse', label: t('exercises.editor.collapse_action_sidebar'))
+  - unless @embed_options[:hide_exercise_description]
+    .exercise.clearfix.row
+      div
+        span.badge.rounded-pill.bg-primary.float-end.score
+
+        h1 id="exercise-headline"
+          i id="description-symbol" class=(@embed_options[:collapse_exercise_description] ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-down')
+          = @exercise.title
+
+      #description-card.lead class=(@embed_options[:collapse_exercise_description] ? 'description-card-collapsed' : 'description-card')
+        = render_markdown(@exercise.description)
+
+      a#toggle href="#" data-show=t('shared.show') data-hide=t('shared.hide')
+        - if @embed_options[:collapse_exercise_description]
+          = t('shared.show')
+        - else
+          = t('shared.hide') 
   #content-left-sidebar.overflow-scroll
     - unless @exercise.hide_file_tree
       div.overflow-scroll
