@@ -54,21 +54,26 @@ class PyUnitAdapter < TestingFrameworkAdapter
     begin
       line_matches = Timeout.timeout(2.seconds) do
         output[:stderr].scan(FILE_LINE_SCAN).map do |match|
-          #example for a match ["SyntaxError", "invalid syntax"]
+          #matches last file and line
           file_name=match[0]
           line_number=match[1].strip
           " in #{file_name} line #{line_number}"
         end || []
       end
     rescue Timeout::Error
-      Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
-      bad_error_matches = []
+      Sentry.capture_message({stderr: output[:stderr], regex: FILE_LINE_SCAN}.to_json)
+      line_matches = []
     end
-    #File.write("RegExTest.txt",bad_error_matches[0]+line_matches[0])
+    #test files
+    if line_matches.length()==bad_error_matches.length()
+      i=0
+      while i<bad_error_matches.length() do
+        bad_error_matches[i]=bad_error_matches[i]+line_matches[i]
+        i=i+1
+      end
+    end
     File.write("RegExTest.txt",bad_error_matches)
-
     File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
-    #{count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_message: (bad_error_matches[0]+line_matches[0])}
     {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_messages: bad_error_matches}
   end
 end
