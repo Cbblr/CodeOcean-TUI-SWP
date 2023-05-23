@@ -64,8 +64,11 @@ class PyUnitAdapter < TestingFrameworkAdapter
       Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
       bad_error_matches = []
     end
-    File.write("RegExTest.txt",bad_error_matches[0]+line_matches[0])
+    #File.write("RegExTest.txt",bad_error_matches[0]+line_matches[0])
+    File.write("RegExTest.txt",bad_error_matches)
+
     File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
-    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_message: (bad_error_matches[0]+line_matches[0])}
+    #{count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_message: (bad_error_matches[0]+line_matches[0])}
+    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_messages: bad_error_matches}
   end
 end
