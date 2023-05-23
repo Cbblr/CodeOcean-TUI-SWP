@@ -44,7 +44,7 @@ class PyUnitAdapter < TestingFrameworkAdapter
           #example for a match ["SyntaxError", "invalid syntax"]
           error_name=match[0]
           error_message=match[1].strip
-          "#{error_name}: #{error_message}"
+          "<span style=\"color:red\">**#{error_name}**</span>: #{error_message}"
         end || []
       end
     rescue Timeout::Error
@@ -57,14 +57,13 @@ class PyUnitAdapter < TestingFrameworkAdapter
           #matches last file and line
           file_name=match[0]
           line_number=match[1].strip
-          " in #{file_name} line #{line_number}"
+          " in #{file_name} **line #{line_number}**"
         end || []
       end
     rescue Timeout::Error
       Sentry.capture_message({stderr: output[:stderr], regex: FILE_LINE_SCAN}.to_json)
       line_matches = []
     end
-    #test files
     if line_matches.length()==bad_error_matches.length()
       i=0
       while i<bad_error_matches.length() do
@@ -72,8 +71,11 @@ class PyUnitAdapter < TestingFrameworkAdapter
         i=i+1
       end
     end
+    #test files
     File.write("RegExTest.txt",bad_error_matches)
     File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
-    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank,bad_error_messages: bad_error_matches}
+    #add bad errors to normal error array
+    assertion_error_matches=assertion_error_matches+bad_error_matches
+    {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank}
   end
 end
