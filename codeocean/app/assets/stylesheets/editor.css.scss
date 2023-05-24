@@ -18,7 +18,7 @@
 
 #rpanrResize {
   position: relative;
-  background: black;
+  background: rgb(215, 215, 215);
   width: 2px;
   cursor: col-resize;
   height: 800px;
@@ -33,6 +33,7 @@
 .panel-h {
   overflow: auto;
   position: relative;
+  max-height: 50vh
 }
 
 .top {
