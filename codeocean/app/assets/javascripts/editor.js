@@ -22,7 +22,7 @@ $(document).on('turbolinks:load', function(event) {
   };
 
   let ismdwn = 0
-  rpanrResize.addEventListener('mousedown', mD)
+  $('#rpanrResize').on('mousedown', mD)
 
   function mD(event) {
     ismdwn = 1
