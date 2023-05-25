@@ -22,7 +22,7 @@ $(document).on('turbolinks:load', function(event) {
   };
 
   let ismdwn = 0
-  $('#rpanrResize').on('mousedown', mD)
+  $('#rpanrResizeHorizontal').on('mousedown', mD)
 
   function mD(event) {
     ismdwn = 1
@@ -40,6 +40,6 @@ $(document).on('turbolinks:load', function(event) {
   const end = (e) => {
     ismdwn = 0
     document.body.removeEventListener('mouseup', end)
-    rpanrResize.removeEventListener('mousemove', mV)
+    rpanrResizeHorizontal.removeEventListener('mousemove', mV)
   }
 });

@@ -16,12 +16,12 @@
   padding-left: 12px;
 }
 
-#rpanrResize {
+#rpanrResizeHorizontal {
   position: relative;
   background: rgb(215, 215, 215);
   width: 2px;
+  display: inline-block;
   cursor: col-resize;
-  height: 800px;
   padding: 0;
 }
 
