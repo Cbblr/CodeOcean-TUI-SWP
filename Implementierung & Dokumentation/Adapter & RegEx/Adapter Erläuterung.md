@@ -51,19 +51,60 @@ ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\
     *   \s\s - sucht nach zwei aufeinanderfolgenden Leerzeichen
     *   (-|=){70} - sucht nach 70 aufeinanderfolgenden Bindestrichen oder Gleichheitszeichen
 * ERROR|FAIL: <beliebiger Text> <beliebiger Text ohne Punkt oder Zeilenumbruch> Error|Exception: <beliebiger Text> >>>beliebiger Text - oder = (70-mal)
-* 
+
 #### Interpretation in Bezug auf die Konsolenausgabe 
 (zu Testzwecken anhand der Aufgabe: WIDIG01_Hangman)
 Beispiele aus der Konsolenausgabe, die auf die zuvor beschriebenen RegEx matchen:
 **zu (1):** z.B.: "Ran 1 test in 0.003s", "Ran 6 tests in 0.014s" etc.
 **zu (2):** z.B: "FAILED (failures=6)", "FAILED (failures=2)" etc.
 **zu (4):** z.B. 
-======================================================================
+\======================================================================
 FAIL: test_correct_letter_input (test_main.Main)
 \---------------------------------------------------------------------- 
 
-======================================================================
+\======================================================================
 FAIL: test_incorrect_word_input (test_main.Main)
 \----------------------------------------------------------------------
 
+### Erläuterung und Beispiele für neu erstellte reguläre Ausdrücke
+Im Rahmen der Anforderung F03 wurden zwei neue Adapter angefügt, die folgend kurz beschrieben werden. Diese filtern zusätzliche Erros, die auch dann angezeigt werden können, wenn keiner der Tests durchlaufen kann. 
+
+#### RegEx: BAD_ERROR_REGEXP (5)
+```ruby
+BAD_ERROR_REGEXP = /(SyntaxError|IndentationError|TabError):(.*)/
+```
+* filtert SyntaxError, IndentationError oder TabError gefolgt von einem beliebigen Text
+* Beides wird als Capturing Group erfasst
+
+**--> Erfasst Errors bei denen die Tests nicht durchlaufen können**
+
+#### RegEx: FILE_LINE_SCAN (6)
+```ruby
+FILE_LINE_SCAN = /File\s\"(.*)\"(?:.*)line\s(\d+)\s/
+```
+* File\s: filtert nach dem Wort "File" gefolgt von einem Leerzeichen
+* \"(.*)\": filtert nach einem beliebigen Text in Anführungszeichen 
+* (?:.*): 
+* line\s(\d+): filtert nach dem Wort "line" gefolgt von einem Leerzeichen und mindestens einer bis belieb vieler Ziffern, die durch eine Capturing Group ausgelesen werden
+* filtert einen Zeilenumbruch nach der erfassten Zahl
+
+**--> erfasst den File und Zeile in welcher der Fehler aus (5) auftritt**
+
+#### Interpretation in Bezug auf die Konsolenausgabe 
+(zu Testzwecken anhand der Aufgabe: WIDIG01_Hangman)
+Der folgende Abschnitt aus der Konsolenausgabe würde beispielweise durch die Regex (5) und (6) erfasst werden:
+
+    File "/workspace/task01.py", line 15 (6)
+        dof guess_letter_or_word() -> str:
+         ^
+    SyntaxError: invalid syntax (5)
+
+#### Auslesen und Anzeigen
+Die Informationen von (5) und (6) ergänzen und bedingen sich natürlich immer gegenseitig. Sie werden also direkt nach dem auslesen in *bad_error_matches* zusammengeführt. Die Schnittstellen und Bezeichner für das Auslesen der Informationen bleiben unverändert. Hier wird der Umstand ausgenutzt, dass die Tests bei den gefilterten Errors in logischer Konsequenz nicht laufen können. Daher können die durch (5) gefilterten Fehler niemals parallel zu den durch (4) gefilterten Errors auftreten. Wird durch (5) ein Error erfasst wird er also identisch zu einem Assertion Error übergeben und dem Nutzer als in den Tests an der gleichen Stelle (Error Messages) angezeigt. 
+
+Für das anzeigen werden direkt examplarisch die, durch die Anforderung F01 hinzugefügten Möglichkeiten genutzt. Die Fehlermeldungen werden direkt im Adapter mit Markdown bzw. konkret mit HTML formatiert, um den Nutzer das Verständnis zu erleichtern:
+
+```ruby
+"<span style=\"color:red\">**#{error_name}**</span>: #{error_message}"
+```
 
