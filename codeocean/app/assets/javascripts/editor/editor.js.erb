@@ -450,6 +450,8 @@ var CodeOceanEditor = {
         }
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
+        $('#pan1').css('flexBasis', $('#sidebar-collapsed').hasClass('d-none') ? 'auto' : '0');
+        $('#rpanrResizeHorizontal').toggleClass('d-none');
     },
 
     initializeRegexes: function () {
@@ -535,6 +537,10 @@ var CodeOceanEditor = {
     },
 
     populateCard: function (card, result, index) {
+        if (result.stderr && !result.score || result.score < 1) {
+            card.find('.card-body').toggleClass('d-none');
+            card.find('i').toggleClass('fa-chevron-down fa-chevron-right')
+        }
         card.find('.card-header').on('click', ()=>{
             card.find('.card-body').toggleClass('d-none');
             card.find('i').toggleClass('fa-chevron-down fa-chevron-right')

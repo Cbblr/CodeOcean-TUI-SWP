@@ -16,12 +16,12 @@
   padding-left: 12px;
 }
 
-#rpanrResize {
+#rpanrResizeHorizontal {
   position: relative;
-  background: black;
+  background: rgb(215, 215, 215);
   width: 2px;
+  display: inline-block;
   cursor: col-resize;
-  height: 800px;
   padding: 0;
 }
 
@@ -33,6 +33,7 @@
 .panel-h {
   overflow: auto;
   position: relative;
+  max-height: 50vh
 }
 
 .top {
