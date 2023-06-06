@@ -51,6 +51,7 @@
 
 /* this class is used for the edit view of an exercise. It needs the height set, as it does not automatically resize */
 .edit-frame {
+  height: 400px;
 
   audio, img, video {
     max-width: 100%;
