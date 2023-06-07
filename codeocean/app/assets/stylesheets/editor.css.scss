@@ -5,18 +5,17 @@
   display: flex;
 }
 
-#pan1 {
+#panel-left {
   position: relative;
   width: 30%;
 }
 
-#pan2 {
+#panel-right {
   position: relative;
-  overflow-x: auto;
   padding-left: 12px;
 }
 
-#rpanrResizeHorizontal {
+#resizerHorizontal {
   position: relative;
   background: rgb(215, 215, 215);
   width: 2px;
@@ -25,18 +24,16 @@
   padding: 0;
 }
 
-.layout-content {
-  grid-area: content;
-  position: relative;
-}
-
-.panel-h {
+.panel-bottom {
   overflow: auto;
   position: relative;
   max-height: 50vh
 }
 
-.top {
+.panel-top {
+  overflow: auto;
+  position: relative;
+  max-height: 50vh;
   resize: vertical;
   height: 70%;
 }
