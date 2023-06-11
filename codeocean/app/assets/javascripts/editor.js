@@ -55,6 +55,7 @@ $(document).on('turbolinks:load', function(event) {
   function mouseMoveVertical(event) {
     if (isMouseDownVertical === 1) {
       $('.panel-top').css('height', event.clientY + "px")
+      $('.panel-bottom').css('height', ($('#editor-column').height() - $('.panel-top').height()) + "px");
     } else {
       mouseUpVertical()
     }

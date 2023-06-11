@@ -5,6 +5,10 @@
   display: flex;
 }
 
+#editor-column {
+  max-height: 85vh;
+}
+
 #panel-left {
   position: relative;
   width: 30%;
@@ -40,6 +44,8 @@
   overflow: auto;
   position: relative;
   height: 50vh;
+  min-height: 30px;
+  max-height: 60vh;
 }
 
 .own-editor {
