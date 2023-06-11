@@ -21,25 +21,25 @@ $(document).on('turbolinks:load', function(event) {
     CodeOceanEditor.initializeEverything();
   };
 
-  let ismdwn = 0
-  $('#rpanrResizeHorizontal').on('mousedown', mD)
+  let isMouseDown = 0
+  $('#resizerHorizontal').on('mousedown', mouseDown)
 
-  function mD(event) {
-    ismdwn = 1
-    document.body.addEventListener('mousemove', mV)
-    document.body.addEventListener('mouseup', end)
+  function mouseDown(event) {
+    isMouseDown = 1
+    document.body.addEventListener('mousemove', mouseMove)
+    document.body.addEventListener('mouseup', mouseUp)
   }
 
-  function mV(event) {
-    if (ismdwn === 1) {
-      pan1.style.flexBasis = event.clientX + "px"
+  function mouseMove(event) {
+    if (isMouseDown === 1) {
+      $('#panel-left').css('flex-basis', event.clientX + "px")
     } else {
-      end()
+      mouseUp()
     }
   }
-  const end = (e) => {
-    ismdwn = 0
-    document.body.removeEventListener('mouseup', end)
-    rpanrResizeHorizontal.removeEventListener('mousemove', mV)
+  function mouseUp(event) {
+    isMouseDown = 0
+    document.body.removeEventListener('mouseup', mouseUp)
+    resizerHorizontal.removeEventListener('mousemove', mouseMove)
   }
 });
