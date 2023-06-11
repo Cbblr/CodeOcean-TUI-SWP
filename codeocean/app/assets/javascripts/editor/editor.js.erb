@@ -451,7 +451,7 @@ var CodeOceanEditor = {
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
         $('#panel-left').css('flexBasis', $('#sidebar-collapsed').hasClass('d-none') ? 'auto' : '0');
-        $('#resizerHorizontal').toggleClass('d-none');
+        $('#resizerHorizontal').toggleClass('d-md-block');
     },
 
     initializeRegexes: function () {
