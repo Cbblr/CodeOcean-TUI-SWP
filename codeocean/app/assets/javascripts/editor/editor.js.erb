@@ -450,6 +450,8 @@ var CodeOceanEditor = {
         }
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
+        $('#panel-left').css('flexBasis', $('#sidebar-collapsed').hasClass('d-none') ? 'auto' : '0');
+        $('#resizerHorizontal').toggleClass('d-none');
     },
 
     initializeRegexes: function () {
@@ -535,6 +537,14 @@ var CodeOceanEditor = {
     },
 
     populateCard: function (card, result, index) {
+        if (result.stderr && !result.score || result.score < 1) {
+            card.find('.card-body').toggleClass('d-none');
+            card.find('i').toggleClass('fa-chevron-down fa-chevron-right')
+        }
+        card.find('.card-header').on('click', ()=>{
+            card.find('.card-body').toggleClass('d-none');
+            card.find('i').toggleClass('fa-chevron-down fa-chevron-right')
+        });
         card.addClass(this.getCardClass(result));
         card.find('.card-title .filename').text(result.filename);
         card.find('.card-title .number').text(index + 1);
@@ -607,9 +617,10 @@ var CodeOceanEditor = {
             // Just show standard results for normal test results
             } else {
               errorMessagesToShow.forEach(function (item) {
+                  var converter = new showdown.Converter();
+                  var html = converter.makeHtml(item)
                   var li = document.createElement("li");
-                  var text = document.createTextNode(item);
-                  $(li).append(text);
+                  li.innerHTML = html;
                   ul.append(li);
               })
             }

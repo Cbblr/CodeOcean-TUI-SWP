@@ -1,6 +1,8 @@
 ## reguläre Ausdrücke des pyunit adapters
 
-Die folgenden RegEx enthalten alle mindestens eine “capturing group”. Die Muster, die in diesen Gruppen (innerhalb des Regex) definiert sind, können später als konkreter Wert extrahiert und somit weiterverwendet werden. "(\d+)" im COUNT_REGEXP definiert bspw. ein Muster, das eine oder mehrere Zahlen enthält. der konkrete Zahlenwert kann dann später für jeden gefunden match ausgelesen werden. (Ohne die restlichen Filterelemente des RegEx).
+### Erläuterung und Beispiele für bestehende reguläre Ausdrücke
+
+Die folgenden RegEx enthalten alle mindestens eine “capturing group”. Die Muster, die in diesen Gruppen (innerhalb des Regex) definiert sind, können später als konkreter Wert extrahiert und somit weiterverwendet werden. "(\d+)" im COUNT_REGEXP definiert bspw. ein Muster, das eine oder mehrere Zahlen enthält. der konkrete Zahlenwert kann dann später für jeden gefunden match ausgelesen werden. 
 Dazu wird in unserem Fall nach der Deklaration die _scan Methode_ verwendet. Diese filtert (im Gegensatz zur match Methode) für _jedes_ match die konkreten Werte der entsprechenden Capturing Group heraus und schreibt diese in ein Array. 
 
 #### RegEx: COUNT_REGEXP (1)
@@ -9,7 +11,7 @@ COUNT_REGEXP = /Ran (\d+) test/
 ```
 * filtert nach Textabschnitten, die das Muster "Ran " gefolgt von einer oder mehr Ziffern und dann " test" enthalten.
 * (Die Klammern um \d+ legen eine sogenannte "capturing group" fest, die das Muster von min. einer oder mehr Ziffern enthält. Diese Gruppe kann später in der Verarbeitung des Treffers verwendet werden, um den genauen Wert der Ziffern zu extrahieren.
-* Durch die folgende Scan Methode wird hier also schlichtweg die Anzahl der durchlaufenen Test gefiltert? ... Hatten wir ja auch anhand des Namen vermutet.) 
+* Durch die folgende Scan Methode wird hier also die Anzahl der durchlaufenen Test gefiltert
 
 **--> Anzahl der durchgeführten Test**
 
@@ -30,12 +32,9 @@ FAILURES_REGEXP =/FAILED \(.*failures=(\d+).*\)/
 ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
 ```
 * identisch mit vorhergehenden aber errors= anstelle von failures= 
-* daher: Anzahl der aufgetretenen Errors wird erfasst??
+* daher: Anzahl der aufgetretenen Errors wird erfasst
 
 **--> Anzahl der aufgetretenen Errors**
-```ruby
-ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
-```
 
 #### RegEx: ASSERTION_ERROR_REGEXP (4)
 ```ruby
@@ -52,21 +51,60 @@ ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\
     *   \s\s - sucht nach zwei aufeinanderfolgenden Leerzeichen
     *   (-|=){70} - sucht nach 70 aufeinanderfolgenden Bindestrichen oder Gleichheitszeichen
 * ERROR|FAIL: <beliebiger Text> <beliebiger Text ohne Punkt oder Zeilenumbruch> Error|Exception: <beliebiger Text> >>>beliebiger Text - oder = (70-mal)
-* 
+
 #### Interpretation in Bezug auf die Konsolenausgabe 
 (zu Testzwecken anhand der Aufgabe: WIDIG01_Hangman)
-Da wir ja vermutet hatten, dass die Konsolenausgabe vielleicht schon unseren Rohdaten (bzw. output) vollständig oder zu entscheidenden Teilen entspricht habe ich mal nach meinen Interpretationen der 4 RegEx in benannter Ausgabe gesucht und fand folgende Stellen spannend:
+Beispiele aus der Konsolenausgabe, die auf die zuvor beschriebenen RegEx matchen:
 **zu (1):** z.B.: "Ran 1 test in 0.003s", "Ran 6 tests in 0.014s" etc.
 **zu (2):** z.B: "FAILED (failures=6)", "FAILED (failures=2)" etc.
 **zu (4):** z.B. 
-======================================================================
+\======================================================================
 FAIL: test_correct_letter_input (test_main.Main)
 \---------------------------------------------------------------------- 
 
-(Ja das sind 70 Minus - hab es gezählt - spaßiger Mittwoch Abend hier...)
-
-======================================================================
+\======================================================================
 FAIL: test_incorrect_word_input (test_main.Main)
 \----------------------------------------------------------------------
-Mir scheint also hier wird der Text(name), das Testfile (deckt sich mit den Titeln der Boxen oben) und ob ein Error oder Fail vorliegt gefiltert 
+
+### Erläuterung und Beispiele für neu erstellte reguläre Ausdrücke
+Im Rahmen der Anforderung F03 wurden zwei neue Adapter angefügt, die folgend kurz beschrieben werden. Diese filtern zusätzliche Erros, die auch dann angezeigt werden können, wenn keiner der Tests durchlaufen kann. 
+
+#### RegEx: BAD_ERROR_REGEXP (5)
+```ruby
+BAD_ERROR_REGEXP = /(SyntaxError|IndentationError|TabError):(.*)/
+```
+* filtert SyntaxError, IndentationError oder TabError gefolgt von einem beliebigen Text
+* Beides wird als Capturing Group erfasst
+
+**--> Erfasst Errors bei denen die Tests nicht durchlaufen können**
+
+#### RegEx: FILE_LINE_SCAN (6)
+```ruby
+FILE_LINE_SCAN = /File\s\"(.*)\"(?:.*)line\s(\d+)\s/
+```
+* File\s: filtert nach dem Wort "File" gefolgt von einem Leerzeichen
+* \"(.*)\": filtert nach einem beliebigen Text in Anführungszeichen 
+* (?:.*): 
+* line\s(\d+): filtert nach dem Wort "line" gefolgt von einem Leerzeichen und mindestens einer bis belieb vieler Ziffern, die durch eine Capturing Group ausgelesen werden
+* filtert einen Zeilenumbruch nach der erfassten Zahl
+
+**--> erfasst den File und Zeile in welcher der Fehler aus (5) auftritt**
+
+#### Interpretation in Bezug auf die Konsolenausgabe 
+(zu Testzwecken anhand der Aufgabe: WIDIG01_Hangman)
+Der folgende Abschnitt aus der Konsolenausgabe würde beispielweise durch die Regex (5) und (6) erfasst werden:
+
+    File "/workspace/task01.py", line 15 (6)
+        dof guess_letter_or_word() -> str:
+         ^
+    SyntaxError: invalid syntax (5)
+
+#### Auslesen und Anzeigen
+Die Informationen von (5) und (6) ergänzen und bedingen sich natürlich immer gegenseitig. Sie werden also direkt nach dem auslesen in *bad_error_matches* zusammengeführt. Die Schnittstellen und Bezeichner für das Auslesen der Informationen bleiben unverändert. Hier wird der Umstand ausgenutzt, dass die Tests bei den gefilterten Errors in logischer Konsequenz nicht laufen können. Daher können die durch (5) gefilterten Fehler niemals parallel zu den durch (4) gefilterten Errors auftreten. Wird durch (5) ein Error erfasst wird er also identisch zu einem Assertion Error übergeben und dem Nutzer als in den Tests an der gleichen Stelle (Error Messages) angezeigt. 
+
+Für das anzeigen werden direkt examplarisch die, durch die Anforderung F01 hinzugefügten Möglichkeiten genutzt. Die Fehlermeldungen werden direkt im Adapter mit Markdown bzw. konkret mit HTML formatiert, um den Nutzer das Verständnis zu erleichtern:
+
+```ruby
+"<span style=\"color:red\">**#{error_name}**</span>: #{error_message}"
+```
 

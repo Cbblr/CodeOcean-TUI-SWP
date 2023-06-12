@@ -19,5 +19,27 @@ $(document).on('turbolinks:load', function(event) {
     // It must not be called during page navigation. Otherwise, content will be duplicated!
     // Search for insertLines and Turbolinks reload / cache control
     CodeOceanEditor.initializeEverything();
+  };
+
+  let isMouseDown = 0
+  $('#resizerHorizontal').on('mousedown', mouseDown)
+
+  function mouseDown(event) {
+    isMouseDown = 1
+    document.body.addEventListener('mousemove', mouseMove)
+    document.body.addEventListener('mouseup', mouseUp)
+  }
+
+  function mouseMove(event) {
+    if (isMouseDown === 1) {
+      $('#panel-left').css('flex-basis', event.clientX + "px")
+    } else {
+      mouseUp()
+    }
+  }
+  function mouseUp(event) {
+    isMouseDown = 0
+    document.body.removeEventListener('mouseup', mouseUp)
+    resizerHorizontal.removeEventListener('mousemove', mouseMove)
   }
 });
