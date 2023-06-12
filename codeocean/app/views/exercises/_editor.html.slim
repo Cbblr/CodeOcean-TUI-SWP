@@ -52,7 +52,7 @@
             i.fa-solid.fa-circle-notch.fa-spin.d-none
             i.fa-solid.fa-clock-rotate-left
             = t('exercises.editor.start_over_active_file')
-      .resizerVertical
+      #resizerVertical
       .panel-bottom
         - unless @embed_options[:disable_run] && @embed_options[:disable_score]
           div id='output_sidebar' class='output-col-collapsed' = render('exercises/editor_output', external_user_id: external_user_id, consumer_id: consumer_id )
