@@ -21,25 +21,47 @@ $(document).on('turbolinks:load', function(event) {
     CodeOceanEditor.initializeEverything();
   };
 
-  let isMouseDown = 0
-  $('#resizerHorizontal').on('mousedown', mouseDown)
+  let isMouseDownHorizontal = 0
+  $('#resizerHorizontal').on('mousedown', mouseDownHorizontal)
 
-  function mouseDown(event) {
-    isMouseDown = 1
-    document.body.addEventListener('mousemove', mouseMove)
-    document.body.addEventListener('mouseup', mouseUp)
+  function mouseDownHorizontal(event) {
+    isMouseDownHorizontal = 1
+    document.body.addEventListener('mousemove', mouseMoveHorizontal)
+    document.body.addEventListener('mouseup', mouseUpHorizontal)
   }
 
-  function mouseMove(event) {
-    if (isMouseDown === 1) {
-      $('#panel-left').css('flex-basis', event.clientX + "px")
+  function mouseMoveHorizontal(event) {
+    if (isMouseDownHorizontal === 1) {
+      $('#panel-left').css('width', event.clientX + "px")
     } else {
-      mouseUp()
+      mouseUpHorizontal()
     }
   }
-  function mouseUp(event) {
-    isMouseDown = 0
-    document.body.removeEventListener('mouseup', mouseUp)
-    resizerHorizontal.removeEventListener('mousemove', mouseMove)
+  function mouseUpHorizontal(event) {
+    isMouseDownHorizontal = 0
+    document.body.removeEventListener('mouseup', mouseUpHorizontal)
+    resizerHorizontal.removeEventListener('mousemove', mouseMoveHorizontal)
+  }
+
+  let isMouseDownVertical = 0
+  $('#resizerVertical').on('mousedown', mouseDownVertical)
+
+  function mouseDownVertical(event) {
+    isMouseDownVertical = 1
+    document.body.addEventListener('mousemove', mouseMoveVertical)
+    document.body.addEventListener('mouseup', mouseUpVertical)
+  }
+
+  function mouseMoveVertical(event) {
+    if (isMouseDownVertical === 1) {
+      $('.panel-top').css('height', event.clientY + "px")
+    } else {
+      mouseUpVertical()
+    }
+  }
+  function mouseUpVertical(event) {
+    isMouseDownVertical = 0
+    document.body.removeEventListener('mouseup', mouseUpVertical)
+    resizerVertical.removeEventListener('mousemove', mouseMoveVertical)
   }
 });

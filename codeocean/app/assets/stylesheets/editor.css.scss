@@ -12,7 +12,6 @@
 
 #panel-right {
   position: relative;
-  padding-left: 12px;
 }
 
 #resizerHorizontal {
@@ -24,18 +23,23 @@
   padding: 0;
 }
 
+#resizerVertical {
+  position: relative;
+  background: rgb(215, 215, 215);
+  height: 2px;
+  cursor: row-resize;
+  margin-bottom: 4px;
+}
+
 .panel-bottom {
   overflow: auto;
   position: relative;
-  max-height: 50vh
 }
 
 .panel-top {
   overflow: auto;
   position: relative;
-  max-height: 50vh;
-  resize: vertical;
-  height: 70%;
+  height: 50vh;
 }
 
 .own-editor {
