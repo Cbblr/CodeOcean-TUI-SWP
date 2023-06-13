@@ -451,9 +451,13 @@ var CodeOceanEditor = {
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
         if ($('#sidebar-uncollapsed').hasClass('d-none')) {
-            $('#panel-left').css('width', $('#sidebar-collapsed').outerWidth(true));
+            if ($(window).width() >= 767) {
+                $('#panel-left').css('width', $('#sidebar-collapsed').outerWidth(true));
+            }
+            $('#panel-left').css('padding-bottom', '4px');
         } else {
-            $('#panel-left').css('width', 0.2 * window.innerWidth);
+            $('#panel-left').css('width', '');
+            $('#panel-left').css('padding-bottom', '');
         }
         $('#resizerHorizontal').toggleClass('d-md-block');
     },
