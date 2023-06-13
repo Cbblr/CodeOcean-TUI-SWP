@@ -167,6 +167,8 @@ CodeOceanEditorSubmissions = {
     if ($('#run').is(':visible')) {
       this.createSubmission('#run', null, this.runSubmission.bind(this));
     }
+    this.showOutputBar();
+    $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 500);  
   },
 
   runSubmission: function (submission) {
