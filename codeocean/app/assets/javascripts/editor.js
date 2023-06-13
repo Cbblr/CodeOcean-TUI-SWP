@@ -32,7 +32,7 @@ $(document).on('turbolinks:load', function(event) {
 
   function mouseMoveHorizontal(event) {
     if (isMouseDownHorizontal === 1) {
-      $('#panel-left').css('width', event.clientX + "px")
+      $('#panel-left').css('width', (event.clientX - $('#panel-left').offset().left) + "px")
     } else {
       mouseUpHorizontal()
     }
@@ -54,7 +54,7 @@ $(document).on('turbolinks:load', function(event) {
 
   function mouseMoveVertical(event) {
     if (isMouseDownVertical === 1) {
-      $('.panel-top').css('height', event.clientY + "px")
+      $('.panel-top').css('height', (event.clientY - $('.panel-top').offset().top - $('#statusbar').height()) + "px")
       $('.panel-bottom').css('height', ($('#editor-column').height() - $('.panel-top').height()) + "px");
     } else {
       mouseUpVertical()
