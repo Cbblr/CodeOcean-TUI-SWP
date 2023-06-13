@@ -1031,6 +1031,17 @@ var CodeOceanEditor = {
         $('#sidebar-search-collapsed').on('click', this.handleSideBarToggle.bind(this));
     },
 
+    toggleTheme: function() {
+        $('#theme-toggle').on('click', function() {
+            var icon = $(this).find('i');
+            if (icon.hasClass('fa-moon')) {
+                icon.removeClass('fa-moon').addClass('fa-sun');
+            } else {
+                icon.removeClass('fa-sun').addClass('fa-moon');
+            }
+            return false;
+        });
+    },
 
     initializeEverything: function () {
         CodeOceanEditor.editors = [];
@@ -1052,6 +1063,7 @@ var CodeOceanEditor = {
         this.resizeAceEditors();
         this.resizeSidebars();
         this.initializeDeadlines();
+        this.toggleTheme();
         CodeOceanEditorTips.initializeEventHandlers();
 
         window.addEventListener("turbolinks:before-render", this.autosaveIfChanged.bind(this));

@@ -1,0 +1,23 @@
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/variables-dark';
+
+$primary:#007ea7;
+
+[data-bs-theme="dark"] {
+    --bs-body-color:#adb5bd;
+    --bs-body-bg:#343a40;
+    --bs-link-color-rgb: 102,186,214;
+    --bs-heading-color:#fff;
+    --bs-btn-color: #f4f4f4;
+    --bs-btn-border-color: #495057;
+    --bs-card-bg: #333;
+  
+    .btn-primary {
+        --bs-btn-bg: #{$primary};
+    }
+    
+    .jstree-default .jstree-clicked {
+        background: #333;
+    }
+}
