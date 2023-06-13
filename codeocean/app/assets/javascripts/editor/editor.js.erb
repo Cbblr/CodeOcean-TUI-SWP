@@ -1033,13 +1033,17 @@ var CodeOceanEditor = {
 
     toggleTheme: function() {
         $('#theme-toggle').on('click', function() {
+            var body = $('body');
             var icon = $(this).find('i');
-            if (icon.hasClass('fa-moon')) {
-                icon.removeClass('fa-moon').addClass('fa-sun');
-            } else {
+
+            if (body.attr('data-bs-theme') === 'dark') {
+                body.attr('data-bs-theme', 'white');
                 icon.removeClass('fa-sun').addClass('fa-moon');
+            } else {
+                body.attr('data-bs-theme', 'dark');
+                icon.removeClass('fa-moon').addClass('fa-sun');
             }
-            return false;
+            return false; // Prevent default link behavior
         });
     },
 

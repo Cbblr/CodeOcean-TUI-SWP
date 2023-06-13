@@ -5,19 +5,50 @@
 $primary:#007ea7;
 
 [data-bs-theme="dark"] {
-    --bs-body-color:#adb5bd;
-    --bs-body-bg:#343a40;
+    --bs-body-color:#ffffff;
+    --bs-body-bg:#212020;
     --bs-link-color-rgb: 102,186,214;
-    --bs-heading-color:#fff;
-    --bs-btn-color: #f4f4f4;
-    --bs-btn-border-color: #495057;
-    --bs-card-bg: #333;
+    --bs-heading-color:#ffffff;
+    --bs-btn-color: #ffffff;
+    color-scheme: dark;
   
     .btn-primary {
         --bs-btn-bg: #{$primary};
     }
-    
+
     .jstree-default .jstree-clicked {
-        background: #333;
+        background: #2e3032;
+    }
+
+    .lead, .fa-arrow-down, .px-2, .fa-clock-rotate-left, .fa-square-plus:before{
+        color:#fff;
+    }
+
+    .mb-2{
+        background-color:#2e3032;
+        color: #ffffff;
+    }
+
+    .exercise, .overflow-scroll, .border-secondary .sidebar-collapse-collapsed{
+        background-color:#2e3032;
+        border-color:#333;
+    }
+
+    .btn-outline-dark{
+        --bs-btn-border-color: #2e3032;
+        --bs-btn-bg:#2e3032;
+    }
+
+    #rpanrResizeHorizontal{
+        background:#333;
+    }
+
+    .card{
+        background-color:#2e3032;
+        --bs-card-border-color:var(--bs-btn-border-color)
+    }
+
+    .card-body{
+        background-color:#2e3032;
     }
 }
