@@ -445,9 +445,6 @@ var CodeOceanEditor = {
     handleSideBarToggle: function () {
         const sidebar = $('#sidebar');
         sidebar.toggleClass('sidebar-col').toggleClass('sidebar-col-collapsed');
-        if (sidebar.hasClass('w-25') || sidebar.hasClass('restore-to-w-25')) {
-            sidebar.toggleClass('w-25').toggleClass('restore-to-w-25');
-        }
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
         if ($('#sidebar-uncollapsed').hasClass('d-none')) {
