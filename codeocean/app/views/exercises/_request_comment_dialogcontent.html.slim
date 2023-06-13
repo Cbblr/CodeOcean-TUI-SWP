@@ -9,3 +9,7 @@ p = ''
 .d-grid.gap-2
   button#askForCommentsButton.btn.btn-primary(type='button' data-cause='requestComments' data-message-success=t('exercises.editor.request_for_comments_sent')) =t('exercises.implement.comment.request')
   button#closeAskForCommentsButton.btn.btn-warning(type='button') =t('activerecord.attributes.request_for_comments.close')
+  .col
+    label.p-3.form-check-label[for="flexCheckChecked"]
+        input#flexCheckChecked.form-check-input[type="checkbox" value="" unchecked]
+    == t('exercises.implement.comment.doNotShowAgain')
