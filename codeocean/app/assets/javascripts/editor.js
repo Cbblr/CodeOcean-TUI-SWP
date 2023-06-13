@@ -31,7 +31,7 @@ $(document).on('turbolinks:load', function(event) {
   }
 
   function mouseMoveHorizontal(event) {
-    if (isMouseDownHorizontal === 1) {
+    if (isMouseDownHorizontal === 1 && event.clientX <= 0.7 * window.innerWidth && event.clientX >= 0.2 * window.innerWidth) {
       $('#panel-left').css('width', (event.clientX - $('#panel-left').offset().left) + "px")
     } else {
       mouseUpHorizontal()
