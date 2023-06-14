@@ -12,10 +12,6 @@ $primary:#007ea7;
     --bs-btn-color: #ffffffdd;
     color-scheme: dark;
 
-    body{
-        background-color: #212020;
-    }
-  
     .btn-primary {
         --bs-btn-bg: #{$primary};
     }
@@ -32,21 +28,21 @@ $primary:#007ea7;
         border-color: #2e3032;
     }
  
-    .lead, .fa-arrow-down, .px-2, .fa-clock-rotate-left, .fa-square-plus:before{
+    .lead, .fa-arrow-down, .px-2, .fa-clock-rotate-left, .fa-square-plus:before {
         color:#ffffffdd;
     }
 
-    .mb-2{
+    .mb-2 {
         background-color:#2e3032;
         color: #ffffffdd;
     }
 
-    .exercise, .overflow-scroll, .border-secondary, .sidebar-collapse-collapsed{
+    .exercise, .overflow-scroll, .border-secondary, .sidebar-collapse-collapsed {
         background-color:#2e3032;
         border-color:#333;
     }
 
-    .btn-outline-dark{
+    .btn-outline-dark {
         --bs-btn-border-color: #2e3032;
         --bs-btn-bg:#2e3032;
     }
@@ -55,18 +51,22 @@ $primary:#007ea7;
         background:#333;
     }
 
-    .card{
+    .panel-top {
+        padding-left: 2px;
+    }
+
+    .card {
         background-color:#2e3032;
     }
 
-    .card-body{
+    .card-body {
         background-color: #2e3032 !important;
         color: var(--bs-heading-color,inherit) !important;
     }
 
-    .ace-tomorrow {
+    .ace_content, .ace_scroller {
         background-color: #2e3032;
-        color: #ffffffdd !important;
+        color: darkgray;
     }
 
     .ace-tomorrow .ace_marker-layer .ace_active-line, .ace-tomorrow .ace_marker-layer .ace_selection {
@@ -78,7 +78,7 @@ $primary:#007ea7;
         color: #888;
     }
 
-    .bg-light {
+    .bg-light, .bg-white {
         background-color: #2e3032 !important;
     }
 
@@ -103,8 +103,6 @@ $primary:#007ea7;
     }
 
     .chosen-container-single .chosen-single {
-        background-color: #2e3032;
-        background: -webkit-gradient(linear,left top,left bottom,color-stop(20%,#2e3032),color-stop(50%,#27292b),color-stop(52%,#2b2d2f),to(#252729));
         background: linear-gradient(#2e3032 20%,#27292b 50%,#2b2d2f 52%,#252729);
         border: 1px solid #555;
         -webkit-box-shadow: inset 0 0 3px #2e3032, 0 1px 1px rgba(0,0,0,.1);
@@ -112,14 +110,13 @@ $primary:#007ea7;
         color: var(--bs-body-color);
     }
 
-    code {
-        background-color: var(--bs-body-bg) !important;
+    .chosen-container .chosen-drop {
+        background-color: #2e3032;
+        border:1px solid #555;
     }
 
-    .chosen-container-multi .chosen-choices {
-        background-color: #2e3032;
-        background-image: -webkit-gradient(linear,left top,left bottom,color-stop(1%,#2b2d2f),color-stop(15%,#2e3032));
-        background-image: linear-gradient(#2b2d2f 1%,#2e3032 15%);
+    .wmd-preview {
+        background-color: var(--bs-body-bg);
         border: 1px solid #555;
     }
 }
