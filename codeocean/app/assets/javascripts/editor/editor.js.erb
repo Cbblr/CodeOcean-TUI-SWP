@@ -1042,6 +1042,21 @@ var CodeOceanEditor = {
         $('#sidebar-search-collapsed').on('click', this.handleSideBarToggle.bind(this));
     },
 
+    toggleTheme: function() {
+        $('#theme-toggle').on('click', function() {
+            var body = $('body');
+            var icon = $(this).find('i');
+
+            if (body.attr('data-bs-theme') === 'dark') {
+                body.attr('data-bs-theme', 'white');
+                icon.removeClass('fa-sun').addClass('fa-moon');
+            } else {
+                body.attr('data-bs-theme', 'dark');
+                icon.removeClass('fa-moon').addClass('fa-sun');
+            }
+            return false; // Prevent default link behavior
+        });
+    },
 
     initializeEverything: function () {
         CodeOceanEditor.editors = [];
@@ -1063,6 +1078,7 @@ var CodeOceanEditor = {
         this.resizeAceEditors();
         this.resizeSidebars();
         this.initializeDeadlines();
+        this.toggleTheme();
         CodeOceanEditorTips.initializeEventHandlers();
 
         window.addEventListener("turbolinks:before-render", this.autosaveIfChanged.bind(this));
