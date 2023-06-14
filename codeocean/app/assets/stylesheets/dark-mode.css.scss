@@ -11,6 +11,10 @@ $primary:#007ea7;
     --bs-heading-color:#ffffffdd;
     --bs-btn-color: #ffffffdd;
     color-scheme: dark;
+
+    body{
+        background-color: #212020;
+    }
   
     .btn-primary {
         --bs-btn-bg: #{$primary};
@@ -24,6 +28,10 @@ $primary:#007ea7;
         border-color: #2e3032 !important;
     }
 
+    .border-secondary {
+        border-color: #2e3032;
+    }
+ 
     .lead, .fa-arrow-down, .px-2, .fa-clock-rotate-left, .fa-square-plus:before{
         color:#ffffffdd;
     }
@@ -33,7 +41,7 @@ $primary:#007ea7;
         color: #ffffffdd;
     }
 
-    .exercise, .overflow-scroll, .border-secondary .sidebar-collapse-collapsed{
+    .exercise, .overflow-scroll, .border-secondary, .sidebar-collapse-collapsed{
         background-color:#2e3032;
         border-color:#333;
     }
