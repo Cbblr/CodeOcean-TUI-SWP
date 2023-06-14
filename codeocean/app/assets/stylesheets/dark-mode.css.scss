@@ -21,7 +21,7 @@ $primary:#007ea7;
     }
 
     .lead, .fa-arrow-down, .px-2, .fa-clock-rotate-left, .fa-square-plus:before{
-        color:#fff;
+        color:#ffffff;
     }
 
     .mb-2{
@@ -49,6 +49,18 @@ $primary:#007ea7;
     }
 
     .card-body{
-        background-color:#2e3032;
+        background-color: #2e3032;
+        --bs-text-opacity: 1;
+        color: #d6d6d6;
+    }
+
+    .ace-tomorrow{
+        background-color: #2e3032;
+        color: #888;
+    }
+
+    .ace_gutter-layer {
+        background-color: #333334;
+        color: #888;
     }
 }
