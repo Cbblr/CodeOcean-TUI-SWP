@@ -37,6 +37,7 @@ $(document).on('turbolinks:load', function(event) {
       mouseUpHorizontal()
     }
   }
+  
   function mouseUpHorizontal(event) {
     isMouseDownHorizontal = 0
     document.body.removeEventListener('mouseup', mouseUpHorizontal)
@@ -60,9 +61,40 @@ $(document).on('turbolinks:load', function(event) {
       mouseUpVertical()
     }
   }
+
   function mouseUpVertical(event) {
     isMouseDownVertical = 0
     document.body.removeEventListener('mouseup', mouseUpVertical)
     resizerVertical.removeEventListener('mousemove', mouseMoveVertical)
   }
+  
+  $(document).ready(function() {
+    // Retrieve the theme state from localStorage
+    var savedTheme = localStorage.getItem('theme');
+  
+    // Set the initial theme based on the stored state
+    if (savedTheme === 'dark') {
+      $('body').attr('data-bs-theme', 'dark');
+      $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
+    } else {
+      $('body').attr('data-bs-theme', 'light');
+      $('#theme-toggle i').removeClass('fa-sun').addClass('fa-moon');
+    }
+  });
+
+  $('#theme-toggle').on('click', function() {
+    var body = $('body');
+    var icon = $(this).find('i');
+  
+    if (body.attr('data-bs-theme') === 'dark') {
+      body.attr('data-bs-theme', 'light');
+      icon.removeClass('fa-sun').addClass('fa-moon');
+      localStorage.setItem('theme', 'light'); // Store the theme state in localStorage
+    } else {
+      body.attr('data-bs-theme', 'dark');
+      icon.removeClass('fa-moon').addClass('fa-sun');
+      localStorage.setItem('theme', 'dark'); // Store the theme state in localStorage
+    }
+    return false; // Prevent default link behavior
+  });
 });
