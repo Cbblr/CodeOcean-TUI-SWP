@@ -69,8 +69,16 @@ $primary:#007ea7;
         color: darkgray;
     }
 
+    .ace_content .ace_cursor {
+        color: black;
+    }
+
     .ace-tomorrow .ace_marker-layer .ace_active-line, .ace-tomorrow .ace_marker-layer .ace_selection {
-        background-color: #111
+        background-color: #27292b
+    }
+
+    .ace-tm .ace_marker-layer .ace_selection{
+        background-color: #27292b;
     }
 
     .ace_gutter-layer {
