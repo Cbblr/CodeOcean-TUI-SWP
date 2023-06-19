@@ -11,4 +11,9 @@
         - else
           = render(layout: false, locals: (local_assigns[:template_variables] || {}).merge(modal: true), template: template)
       .modal-footer
-        = yield(:modal_footer)
+        div.footer-content
+          = yield(:modal_footer)
+        .col.d-none
+          label.p-3.form-check-label[for="flexCheckChecked"]
+            input#flexCheckChecked.form-check-input[type="checkbox" value="" unchecked]
+          == t('exercises.implement.comment.doNotShowAgain')        

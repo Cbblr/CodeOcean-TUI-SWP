@@ -993,26 +993,28 @@ var CodeOceanEditor = {
                                 const button = $('#requestComments');
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
-                                    $('#rfc_intervention_text').show();
-                                    const modal = $('#comment-modal');
-                                    if (!modal.isPresent()) {
-                                        // The modal is not present (e.g., because the site was navigated), so we don't continue here.
-                                        return;
-                                    }
+                                        $('#rfc_intervention_text').show();
+                                        let modal = $('#comment-modal');
+                                        if (!modal.isPresent()) {
+                                            // The modal is not present (e.g., because the site was navigated), so we don't continue here.
+                                            return;
+                                        }
 
-                                    modal.find('.modal-footer').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
-                                    modal.on('hidden.bs.modal', function () {
-                                        modal.find('.modal-footer').text('');
-                                    });
-                                    new bootstrap.Modal(modal).show();
-                                    $.ajax({
-                                        data: {
-                                            intervention_type: 'QuestionIntervention'
-                                        },
-                                        dataType: 'json',
-                                        type: 'POST',
-                                        url: interventionSaveUrl
-                                    });
+                                        modal = modal.clone();
+                                        modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
+                                        modal.find('.col').toggleClass('d-none');
+                                        modal.on('hidden.bs.modal', function () {
+                                            modal.find('.modal-footer').text('');
+                                        });
+                                        new bootstrap.Modal(modal).show();
+                                        $.ajax({
+                                            data: {
+                                                intervention_type: 'QuestionIntervention'
+                                            },
+                                            dataType: 'json',
+                                            type: 'POST',
+                                            url: interventionSaveUrl
+                                        });
                                 }
                             }
                         }
