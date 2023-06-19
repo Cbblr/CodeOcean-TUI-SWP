@@ -129,7 +129,7 @@ class UserExerciseFeedbacksController < ApplicationController
       .where(user_id:, user_type:, exercise_id:)
       .order(created_at: :desc).final.first
 
-    authorize(latest_submission, :show?)
+
 
     params[:user_exercise_feedback]
       .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime)
@@ -143,7 +143,7 @@ class UserExerciseFeedbacksController < ApplicationController
     if uef_params[:difficulty].to_i.negative? || uef_params[:difficulty].to_i >= comment_presets.size
       false
     else
-      !(uef_params[:user_estimated_worktime].to_i.negative? || uef_params[:user_estimated_worktime].to_i >= time_presets.size)
+      !(uef_params[:user_estimated_worktime].to_i.negative?)
     end
   rescue StandardError
     false
