@@ -14,13 +14,7 @@ class UserExerciseFeedbacksController < ApplicationController
      [4, t('user_exercise_feedback.difficult_too_difficult')]]
   end
 
-  def time_presets
-    [[0, t('user_exercise_feedback.estimated_time_less_5')],
-     [1, t('user_exercise_feedback.estimated_time_5_to_10')],
-     [2, t('user_exercise_feedback.estimated_time_10_to_20')],
-     [3, t('user_exercise_feedback.estimated_time_20_to_30')],
-     [4, t('user_exercise_feedback.estimated_time_more_30')]]
-  end
+ 
 
   def new
     exercise_id = if params[:user_exercise_feedback].nil?
@@ -47,6 +41,8 @@ class UserExerciseFeedbacksController < ApplicationController
     rescue StandardError
       nil
     end
+
+
 
     if @exercise
       @uef = UserExerciseFeedback.find_or_initialize_by(user: current_user, exercise: @exercise)
@@ -111,7 +107,6 @@ class UserExerciseFeedbacksController < ApplicationController
 
   def set_presets
     @texts = comment_presets.to_a
-    @times = time_presets.to_a
   end
 
   def uef_params
@@ -128,11 +123,12 @@ class UserExerciseFeedbacksController < ApplicationController
     latest_submission = Submission
       .where(user_id:, user_type:, exercise_id:)
       .order(created_at: :desc).final.first
-
-
+    
+    #zu Testzwecken auskommentiert Softwareprojekt
+    #authorize(latest_submission, :show?)
 
     params[:user_exercise_feedback]
-      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime)
+      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime, :user_estimated_worktime)
       .merge(user_id:,
         user_type:,
         submission: latest_submission,

@@ -21,18 +21,8 @@
     .row
       .col-1.pt-1
         = f.number_field :user_estimated_worktime, class: 'form-control', min: 0, step: 1, input_html: { pattern: "[0-9]*" }
-
       span.col-auto.pt-2
-        |h
-
-
-
-      .col-1.pt-1
-        = f.number_field :user_estimated_worktime, class: 'form-control', min: 0, max: 59, step: 1, input_html: { pattern: "[0-9]*" }
-      span.col-auto.pt-2
-        |min
-
-
+        |Zeit in Minuten
     br
 
     = f.hidden_field :exercise_id, value: @exercise.id
