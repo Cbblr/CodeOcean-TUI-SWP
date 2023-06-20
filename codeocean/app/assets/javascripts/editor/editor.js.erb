@@ -910,6 +910,7 @@ var CodeOceanEditor = {
      * */
     initializeInterventionTimer: function () {
         const editor = $('#editor');
+        const checkbox = $('#flexCheckChecked');
 
         if (editor.data('rfc-interventions') || editor.data('break-interventions') || editor.data('tips-interventions')) { // split in break or rfc intervention
             window.onblur = function () {
@@ -991,10 +992,12 @@ var CodeOceanEditor = {
                                 });
                             } else if (editor.data('rfc-interventions')) {
                                 const button = $('#requestComments');
+                                const interventionKey = 'rfcInterventionShown#' + editor.data('exercise-id') + '#' + editor.data('user-id'); // Key for storing intervention flag in localStorage
+                                console.log(interventionKey);
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
                                         $('#rfc_intervention_text').show();
-                                        let modal = $('#comment-modal');
+                                            let modal = $('#comment-modal');
                                         if (!modal.isPresent()) {
                                             // The modal is not present (e.g., because the site was navigated), so we don't continue here.
                                             return;
@@ -1005,16 +1008,23 @@ var CodeOceanEditor = {
                                         modal.find('.col').toggleClass('d-none');
                                         modal.on('hidden.bs.modal', function () {
                                             modal.find('.modal-footer').text('');
+                                        }); 
+                                        modal.find('#flexCheckChecked').on('change', function(event){
+                                            localStorage.setItem(interventionKey, event.target.checked); // Check if intervention has been shown before
                                         });
-                                        new bootstrap.Modal(modal).show();
-                                        $.ajax({
-                                            data: {
-                                                intervention_type: 'QuestionIntervention'
-                                            },
-                                            dataType: 'json',
-                                            type: 'POST',
-                                            url: interventionSaveUrl
-                                        });
+                                        
+                                        if(localStorage.getItem(interventionKey) === 'true'){
+                                            return;
+                                        }
+                                    new bootstrap.Modal(modal).show();
+                                    $.ajax({
+                                        data: {
+                                            intervention_type: 'QuestionIntervention'
+                                        },
+                                        dataType: 'json',
+                                        type: 'POST',
+                                        url: interventionSaveUrl
+                                    });
                                 }
                             }
                         }
