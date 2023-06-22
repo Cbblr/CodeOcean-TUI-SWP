@@ -910,6 +910,7 @@ var CodeOceanEditor = {
      * */
     initializeInterventionTimer: function () {
         const editor = $('#editor');
+        const checkbox = $('#flexCheckChecked');
 
         if (editor.data('rfc-interventions') || editor.data('break-interventions') || editor.data('tips-interventions')) { // split in break or rfc intervention
             window.onblur = function () {
@@ -991,19 +992,30 @@ var CodeOceanEditor = {
                                 });
                             } else if (editor.data('rfc-interventions')) {
                                 const button = $('#requestComments');
+                                const interventionKey = 'rfcInterventionShown#' + editor.data('exercise-id') + '#' + editor.data('user-id'); // Key for storing intervention flag in localStorage
+                                console.log(interventionKey);
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
-                                    $('#rfc_intervention_text').show();
-                                    const modal = $('#comment-modal');
-                                    if (!modal.isPresent()) {
-                                        // The modal is not present (e.g., because the site was navigated), so we don't continue here.
-                                        return;
-                                    }
+                                        $('#rfc_intervention_text').show();
+                                            let modal = $('#comment-modal');
+                                        if (!modal.isPresent()) {
+                                            // The modal is not present (e.g., because the site was navigated), so we don't continue here.
+                                            return;
+                                        }
 
-                                    modal.find('.modal-footer').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
-                                    modal.on('hidden.bs.modal', function () {
-                                        modal.find('.modal-footer').text('');
-                                    });
+                                        modal = modal.clone();
+                                        modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
+                                        modal.find('.col').toggleClass('d-none');
+                                        modal.on('hidden.bs.modal', function () {
+                                            modal.find('.modal-footer').text('');
+                                        }); 
+                                        modal.find('#flexCheckChecked').on('change', function(event){
+                                            localStorage.setItem(interventionKey, event.target.checked); // Check if intervention has been shown before
+                                        });
+                                        
+                                        if(localStorage.getItem(interventionKey) === 'true'){
+                                            return;
+                                        }
                                     new bootstrap.Modal(modal).show();
                                     $.ajax({
                                         data: {
