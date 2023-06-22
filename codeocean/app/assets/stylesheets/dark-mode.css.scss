@@ -77,16 +77,12 @@ $primary:#007ea7;
         background-color: #27292b
     }
 
-    .ace-tm .ace_marker-layer .ace_selection{
+    .ace-tm .ace_marker-layer .ace_selection {
         background-color: #27292b;
     }
 
     .ace-tm .ace_keyword {
         color: dodgerblue;
-    }
-
-    .ace-tm .ace_marker-layer .ace_selected-word {
-
     }
 
     .ace_gutter-layer {
@@ -134,5 +130,17 @@ $primary:#007ea7;
     .wmd-preview {
         background-color: var(--bs-body-bg);
         border: 1px solid #555;
+    }
+
+    .vis-time-axis .vis-text , .vis-data-axis .vis-y-axis.vis-major{
+        color: #b6b9b6;
+    }
+
+    .chosen-container-multi .chosen-choices {
+        background-image: linear-gradient(#2b2a2a 1%,#2b2a2a 15%);
+    }
+
+    .form-control {
+        color: #2e3032;
     }
 }
