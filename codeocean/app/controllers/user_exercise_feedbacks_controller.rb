@@ -14,7 +14,14 @@ class UserExerciseFeedbacksController < ApplicationController
      [4, t('user_exercise_feedback.difficult_too_difficult')]]
   end
 
- 
+  def error_presets
+    [[0, t('user_exercise_feedback.very_good')],
+     [1, t('user_exercise_feedback.good')],
+     [2, t('user_exercise_feedback.neutral')],
+     [3, t('user_exercise_feedback.bad')],
+     [4, t('user_exercise_feedback.very_bad')]]
+  end
+
 
   def new
     exercise_id = if params[:user_exercise_feedback].nil?
@@ -107,6 +114,8 @@ class UserExerciseFeedbacksController < ApplicationController
 
   def set_presets
     @texts = comment_presets.to_a
+    @errors = error_presets.to_a
+
   end
 
   def uef_params
@@ -128,7 +137,7 @@ class UserExerciseFeedbacksController < ApplicationController
     #authorize(latest_submission, :show?)
 
     params[:user_exercise_feedback]
-      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime, :user_estimated_worktime)
+      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime, :user_error_feedback, :user_error_feedback_text)
       .merge(user_id:,
         user_type:,
         submission: latest_submission,

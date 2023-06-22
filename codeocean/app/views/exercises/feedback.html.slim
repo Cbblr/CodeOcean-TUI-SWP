@@ -13,6 +13,7 @@ h1 = link_to_if(policy(@exercise).show?, @exercise, exercise_path(@exercise))
 
   ul.list-unstyled
     - comment_presets = UserExerciseFeedbacksController.new.comment_presets
+    - error_presets = UserExerciseFeedbacksController.new.error_presets
     - @feedbacks.each_with_index do |feedback, index|
       li.card.mt-2
         .card-header role="tab" id="heading"
@@ -25,12 +26,14 @@ h1 = link_to_if(policy(@exercise).show?, @exercise, exercise_path(@exercise))
         .card-collapse role="tabpanel"
           .card-body.feedback
             .text style="white-space: pre-wrap;" = feedback.feedback_text
-            .difficulty = "#{t('user_exercise_feedback.difficulty')} #{comment_presets[feedback.difficulty].join(' - ')}" if feedback.difficulty
-            .worktime = "#{t('user_exercise_feedback.working_time')} #{[feedback.user_estimated_worktime.to_s].join(' - ')} Minuten" if feedback.user_estimated_worktime
-        - if policy(@exercise).detailed_statistics?
-          .card-footer
-            div.clearfix.feedback-header
-              span.points.flex-grow-1 = "#{t('exercises.statistics.score')}: #{@submissions[index]&.score}"
-              span.working_time.float-end = "#{t('exercises.statistics.worktime')}: #{@exercise.average_working_time_for(feedback.user) or 0}"
+            .difficulty = "#{t('user_exercise_feedback.difficulty')} #{comment_presets[feedback.difficulty].second}" if feedback.difficulty
+            .worktime = "#{t('user_exercise_feedback.working_time')} #{[feedback.user_estimated_worktime.to_s].join(' - ')} #{t('user_exercise_feedback.minutes')}" if feedback.user_estimated_worktime
+            .errorfeedback = "#{t('user_exercise_feedback.user_error_feedback')} #{error_presets[feedback.user_error_feedback].second}" if feedback.user_error_feedback
+            .errorfeedbacktext = "#{t('user_exercise_feedback.user_error_feedback_text')} #{(feedback.user_error_feedback_text)}" if feedback.user_error_feedback_text
+          - if policy(@exercise).detailed_statistics?
+            .card-footer
+              div.clearfix.feedback-header
+                span.points.flex-grow-1 = "#{t('exercises.statistics.score')}: #{@submissions[index]&.score}"
+                span.working_time.float-end = "#{t('exercises.statistics.worktime')}: #{@exercise.average_working_time_for(feedback.user) or 0}"
 
   = render('shared/pagination', collection: @feedbacks)

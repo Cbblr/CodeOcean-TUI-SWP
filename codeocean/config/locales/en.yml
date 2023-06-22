@@ -938,6 +938,13 @@ en:
     difficulty_some_what_difficult: "the exercise was somewhat difficult"
     difficult_too_difficult: "the exercise was too difficult"
     difficulty: "Difficulty of the exercise:"
+    very_good: "very helpful"
+    good: "helpful"
+    neutral: "okayish"
+    bad: "less helpful"
+    very_bad: "not helpful at all"
+    user_error_feedback: "The error feedbacks were:"
+    user_error_feedback_text: "Why do I think so? (Please only answer if your answer to the question above was negative.)"
     description: "Your points have been submitted. We kindly ask you for feedback for this exercise. <br> If you do not want to give feedback you can simply close this window.<br><br>Please describe what you liked on this exercise and what you did not. Was the exercise easy to understand or did you have problems understanding? How was the difficulty of the exercise to you?<br>We are happy about any feedback."
     estimated_time_less_5: "less than 5 minutes"
     estimated_time_5_to_10: "between 5 and 10 minutes"
@@ -945,6 +952,7 @@ en:
     estimated_time_20_to_30: "between 20 and 30 minutes"
     estimated_time_more_30: "more than 30 minutes"
     working_time: "Estimated time working on this exercise:"
+    minutes: "minutes"
     no_feedback: "There is no feedback for this exercise yet."
   error_templates:
     hints:
