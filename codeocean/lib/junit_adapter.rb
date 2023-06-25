@@ -5,11 +5,8 @@ class JunitAdapter < TestingFrameworkAdapter
   FAILURES_REGEXP = /Failures: (\d+)/
   SUCCESS_REGEXP = /OK \((\d+) tests?\)\s*(?:\x1B\]0;|exit)?\s*\z/
   ASSERTION_ERROR_REGEXP = /java\.lang\.AssertionError:?\s(.*?)\tat org\.junit|org\.junit\.ComparisonFailure:\s(.*?)\tat org\.junit|\)\r\n(.*?)\tat org\.junit\.internal\.ComparisonCriteria\.arrayEquals\(ComparisonCriteria\.java:50\)/m
-  COMPILE_ERROR_REGEXP_1LINE = /(.*).java:(\d*):\serror:\s(unclosed string literal|illegal start of expression|
-  variable(?:.*) might not have been initialized|not a statement|(?:.+)expected|
-  (?:.*) cannot be applied to (?:.*)|bad operand types (?:.*)|incompatible types:(?:.*)|missing return (?:.*)|
-  invalid method declaration(?:.*)|unreachable statement|(?:.*) cannot be referenced from a static context)\s*^\s*(.*)/
-  COMPILE_ERROR_REGEXP_3LINE = /(.*).java:(\d*):\serror:\s(cannot find symbol)\s*^\s*(.*)\s*(?:\^*)\s*(.*)\s*(.*)/
+  COMPILE_ERROR_REGEXP_1LINE = /(.*).java:(\d*):\serror:\s(unclosed string literal|illegal start of expression|not a statement|unexpected type|(?:.+)expected|bad operand types (?:.*)|variable (?:.*) might not have been initialized|incompatible types:(?:.*)|missing return (?:.*)|invalid method declaration(?:.*)|unreachable statement|(?:.*) cannot be referenced from a static context|reached end of file while parsing)\s*^\s*(.*)/
+  COMPILE_ERROR_REGEXP_3LINE = /(.*).java:(\d*):\serror:\s((?:.*) cannot be applied to (?:.*)|cannot find symbol)\s*^\s*(.*)\s*(?:\^*)\s*(.*)\s*(.*)/
   
   def self.framework_name
     'JUnit 4'
@@ -46,7 +43,6 @@ class JunitAdapter < TestingFrameworkAdapter
           "<span style=\"color:red\">**Compilation Error**</span> in **file** #{error_file} **line #{line_number}** occured **#{error_name}** at #{code_line_1}\n #{code_line_2}\n #{code_line_3} "
         end
       end || []
-      
       {count:, failed:, error_messages: error_matches.flatten.compact_blank+compile_error_matches_1line+compile_error_matches_3line}
     end
   end
