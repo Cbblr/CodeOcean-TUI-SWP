@@ -137,7 +137,7 @@ class UserExerciseFeedbacksController < ApplicationController
     #authorize(latest_submission, :show?)
 
     params[:user_exercise_feedback]
-      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime, :user_error_feedback, :user_error_feedback_text)
+      .permit(:feedback_text, :difficulty, :exercise_id, :user_estimated_worktime_minutes, :user_estimated_worktime_hours, :user_error_feedback, :user_error_feedback_text)
       .merge(user_id:,
         user_type:,
         submission: latest_submission,
@@ -148,7 +148,7 @@ class UserExerciseFeedbacksController < ApplicationController
     if uef_params[:difficulty].to_i.negative? || uef_params[:difficulty].to_i >= comment_presets.size
       false
     else
-      !(uef_params[:user_estimated_worktime].to_i.negative?)
+      !(uef_params[:user_estimated_worktime_hours].to_i.negative? || uef_params[:user_estimated_worktime_minutes].to_i.negative? )
     end
   rescue StandardError
     false

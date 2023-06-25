@@ -953,6 +953,7 @@ de:
     estimated_time_more_30: "mehr als 30 Minuten"
     working_time: "Geschätze Bearbeitungszeit für diese Aufgabe:"
     minutes: "Minuten"
+    hours: "Stunden"
     no_feedback: "Es wurde noch kein Feedback zu dieser Aufgabe gegeben."
   error_templates:
     hints:

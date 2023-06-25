@@ -27,7 +27,7 @@ h1 = link_to_if(policy(@exercise).show?, @exercise, exercise_path(@exercise))
           .card-body.feedback
             .text style="white-space: pre-wrap;" = feedback.feedback_text
             .difficulty = "#{t('user_exercise_feedback.difficulty')} #{comment_presets[feedback.difficulty].second}" if feedback.difficulty
-            .worktime = "#{t('user_exercise_feedback.working_time')} #{[feedback.user_estimated_worktime.to_s].join(' - ')} #{t('user_exercise_feedback.minutes')}" if feedback.user_estimated_worktime
+            .worktime = "#{t('user_exercise_feedback.working_time')} #{[feedback.user_estimated_worktime_hours.to_s].join(' - ')} #{t('user_exercise_feedback.hours')} #{[feedback.user_estimated_worktime_minutes.to_s].join(' - ')} #{t('user_exercise_feedback.minutes')}" if feedback.user_estimated_worktime
             .errorfeedback = "#{t('user_exercise_feedback.user_error_feedback')} #{error_presets[feedback.user_error_feedback].second}" if feedback.user_error_feedback
             .errorfeedbacktext = "#{t('user_exercise_feedback.user_error_feedback_text')} #{(feedback.user_error_feedback_text)}" if feedback.user_error_feedback_text
           - if policy(@exercise).detailed_statistics?

@@ -953,6 +953,7 @@ en:
     estimated_time_more_30: "more than 30 minutes"
     working_time: "Estimated time working on this exercise:"
     minutes: "minutes"
+    hours: "hours"
     no_feedback: "There is no feedback for this exercise yet."
   error_templates:
     hints:
