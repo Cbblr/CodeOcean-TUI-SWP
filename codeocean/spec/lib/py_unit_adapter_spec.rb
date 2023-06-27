@@ -4,17 +4,13 @@ require 'rails_helper'
 
 describe PyUnitAdapter do
   let(:adapter) { described_class.new }
-  let(:count) { 42 }
-  let(:failed) { 25 }
-  let(:error_matches) { [] }
-  let(:stderr) { "Ran #{count} tests in 0.1s\n\nFAILED (failures=#{failed})" }
 
   describe '#parse_output' do
 
     #Initialize data for Testcase 1.1
     let(:count) {2}
     let(:failed) {0}
-    let(:error_matches) { File.read("spec/testcasedata/CorrectSolutionErrors.txt") }
+    let(:error_matches) {[]}
     let(:stderr) { File.read("spec/testcasedata/CorrectSolution.txt")}
     
     #Testcase 1.1
@@ -25,7 +21,7 @@ describe PyUnitAdapter do
     #Initialize data for Testcase 1.2
     let(:count) {2}
     let(:failed) {1}
-    let(:error_matches) {File.read("spec/testcasedata/correctnumbererrors.txt")}
+    let(:error_matches) {["test_odd: 0 is not true"]}
     let(:stderr) { File.read("spec/testcasedata/correctnumber.txt")}
     
     #Testcase 1.2
@@ -37,7 +33,7 @@ describe PyUnitAdapter do
     let(:count) {0}
     let(:failed) {0}
     #Initialize data for Testcase 1.3
-    let(:error_matches) { File.read("spec/testcasedata/SyntaxErrorTestErrors.txt")}
+    let(:error_matches) {["<span style=\"color:red\">**SyntaxError**</span>: invalid syntax in **file** exercise.py **line 2**"]}
     let(:stderr) { File.read("spec/testcasedata/SyntaxErrorTest.txt")}
 
     #Testcase 1.3
@@ -46,8 +42,8 @@ describe PyUnitAdapter do
     end
 
     #Initialize data for Testcase 1.4
-    let(:error_matches) { File.read("spec/testcasedata/IndentationErrorTest.txt")}
-    let(:stderr) { File.read("spec/testcasedata/IndentationErrorTestErrors.txt")}
+    let(:error_matches) {["<span style=\"color:red\">**IndentationError**</span>: expected an indented block in **file** exercise.py **line 3**"]}
+    let(:stderr) { File.read("spec/testcasedata/IndentationErrorTest.txt")}
 
     #Testcase 1.4
     it 'IndentationError' do
