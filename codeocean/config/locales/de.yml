@@ -485,6 +485,7 @@ de:
         listing: Die neuesten Kommentaranfragen
         request: "Kommentaranfrage stellen"
         question: "Bitte beschreiben Sie kurz Ihre Probleme oder nennen Sie den Programmteil, zu dem Sie Feedback wünschen. Ihr Programmcode und eventuelle Fehlermeldungen werden automatisch zur Anfrage hinzugefügt."
+        doNotShowAgain: "Diese Meldung nicht mehr anzeigen"
       intervention:
         explanation: "Diese Meldung erscheint, weil Sie %{duration} Minuten an dieser Aufgabe gearbeitet haben. 25% Ihrer Mitlernenden arbeiten länger daran, insofern ist das kein Problem, aber dies hat sich als <a href='https://hpi.de/forschung/publikationen/dissertationen/dissertation-ralf-teusner.html' style='display: contents;' target='_blank' rel='noopener'>effektiven Zeitpunkt für diese Meldung</a> erwiesen."
       rfc_intervention:

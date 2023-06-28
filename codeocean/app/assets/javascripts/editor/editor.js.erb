@@ -445,13 +445,18 @@ var CodeOceanEditor = {
     handleSideBarToggle: function () {
         const sidebar = $('#sidebar');
         sidebar.toggleClass('sidebar-col').toggleClass('sidebar-col-collapsed');
-        if (sidebar.hasClass('w-25') || sidebar.hasClass('restore-to-w-25')) {
-            sidebar.toggleClass('w-25').toggleClass('restore-to-w-25');
-        }
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
-        $('#panel-left').css('flexBasis', $('#sidebar-collapsed').hasClass('d-none') ? 'auto' : '0');
-        $('#resizerHorizontal').toggleClass('d-none');
+        if ($('#sidebar-uncollapsed').hasClass('d-none')) {
+            if ($(window).width() >= 767) {
+                $('#panel-left').css('width', $('#sidebar-collapsed').outerWidth(true));
+            }
+            $('#panel-left').css('padding-bottom', '4px');
+        } else {
+            $('#panel-left').css('width', '');
+            $('#panel-left').css('padding-bottom', '');
+        }
+        $('#resizerHorizontal').toggleClass('d-md-block');
     },
 
     initializeRegexes: function () {
@@ -867,12 +872,18 @@ var CodeOceanEditor = {
         $('#output_sidebar_collapsed').addClass('d-none');
         $('#output_sidebar_uncollapsed').removeClass('d-none');
         $('#output_sidebar').removeClass('output-col-collapsed').addClass('output-col');
+        $('#resizerVertical').removeClass('d-none');
+        $('.panel-top').css('height', '50vh')
+        $('.panel-bottom').css('height', '30vh');
     },
 
     hideOutputBar: function () {
         $('#output_sidebar_collapsed').removeClass('d-none');
         $('#output_sidebar_uncollapsed').addClass('d-none');
         $('#output_sidebar').removeClass('output-col').addClass('output-col-collapsed');
+        $('#resizerVertical').addClass('d-none');
+        $('.panel-bottom').css('height', $('#output_sidebar_collapsed').height() + 'px');
+        $('.panel-top').css('height', ($('#editor-column').height() - $('.panel-bottom').height()) + "px");
     },
 
     initializeSideBarTooltips: function () {
@@ -899,6 +910,7 @@ var CodeOceanEditor = {
      * */
     initializeInterventionTimer: function () {
         const editor = $('#editor');
+        const checkbox = $('#flexCheckChecked');
 
         if (editor.data('rfc-interventions') || editor.data('break-interventions') || editor.data('tips-interventions')) { // split in break or rfc intervention
             window.onblur = function () {
@@ -980,19 +992,30 @@ var CodeOceanEditor = {
                                 });
                             } else if (editor.data('rfc-interventions')) {
                                 const button = $('#requestComments');
+                                const interventionKey = 'rfcInterventionShown#' + editor.data('exercise-id') + '#' + editor.data('user-id'); // Key for storing intervention flag in localStorage
+                                console.log(interventionKey);
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
-                                    $('#rfc_intervention_text').show();
-                                    const modal = $('#comment-modal');
-                                    if (!modal.isPresent()) {
-                                        // The modal is not present (e.g., because the site was navigated), so we don't continue here.
-                                        return;
-                                    }
+                                        $('#rfc_intervention_text').show();
+                                            let modal = $('#comment-modal');
+                                        if (!modal.isPresent()) {
+                                            // The modal is not present (e.g., because the site was navigated), so we don't continue here.
+                                            return;
+                                        }
 
-                                    modal.find('.modal-footer').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
-                                    modal.on('hidden.bs.modal', function () {
-                                        modal.find('.modal-footer').text('');
-                                    });
+                                        modal = modal.clone();
+                                        modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
+                                        modal.find('.col').toggleClass('d-none');
+                                        modal.on('hidden.bs.modal', function () {
+                                            modal.find('.modal-footer').text('');
+                                        }); 
+                                        modal.find('#flexCheckChecked').on('change', function(event){
+                                            localStorage.setItem(interventionKey, event.target.checked); // Check if intervention has been shown before
+                                        });
+                                        
+                                        if(localStorage.getItem(interventionKey) === 'true'){
+                                            return;
+                                        }
                                     new bootstrap.Modal(modal).show();
                                     $.ajax({
                                         data: {
@@ -1030,7 +1053,6 @@ var CodeOceanEditor = {
 
         $('#sidebar-search-collapsed').on('click', this.handleSideBarToggle.bind(this));
     },
-
 
     initializeEverything: function () {
         CodeOceanEditor.editors = [];
