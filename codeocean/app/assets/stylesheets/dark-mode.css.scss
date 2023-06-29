@@ -141,6 +141,10 @@ $primary:#007ea7;
     }
 
     .form-control {
-        color: #2e3032;
+        color: #d7d8d8;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+        color: #d7d8d8;
     }
 }
