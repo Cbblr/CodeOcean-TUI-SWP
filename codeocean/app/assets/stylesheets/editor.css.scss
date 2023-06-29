@@ -5,6 +5,16 @@
   display: flex;
 }
 
+
+
+.btn, #description, #content-left-sidebar, #content-right-sidebar {
+  border-radius: 5px !important;
+}
+
+#editor-buttons .btn {
+  margin: 2px;
+}
+
 #editor-column {
   max-height: 85vh;
 }

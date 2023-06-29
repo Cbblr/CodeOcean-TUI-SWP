@@ -85,6 +85,8 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     amq-protocol (2.3.2)
     ast (2.4.2)
+    autoprefixer-rails (10.4.13.0)
+      execjs (~> 2)
     bcrypt (3.1.18)
     better_errors (2.10.0)
       erubi (>= 1.0.0)
@@ -95,6 +97,10 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
+    bootstrap (5.2.3)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.11.6, < 3)
+      sassc-rails (>= 2.0.0)
     bootstrap-will_paginate (1.0.0)
       will_paginate
     builder (3.2.4)
@@ -274,6 +280,7 @@ GEM
     parser (3.2.2.1)
       ast (~> 2.4.1)
     pg (1.5.3)
+    popper_js (2.11.7)
     prometheus_exporter (2.0.8)
       webrick
     pry (0.14.2)
@@ -527,6 +534,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap
+  bootstrap (~> 5.2)
   bootstrap-will_paginate
   capybara
   carrierwave

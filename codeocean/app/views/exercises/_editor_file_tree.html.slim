@@ -10,7 +10,7 @@ div.d-grid.gap-2 id='sidebar-collapsed' class=(@exercise.hide_file_tree && @tips
 div.d-grid.enforce-bottom-margin id='sidebar-uncollapsed' class=(@exercise.hide_file_tree && @tips.blank? ? 'd-none' : '')
   = render('editor_button', classes: 'btn-outline-dark overflow-hidden mb-2', icon: 'fa-solid fa-square-minus', id: 'sidebar-collapse', label: t('exercises.editor.collapse_action_sidebar'))
   - unless @embed_options[:hide_exercise_description]
-    .exercise.clearfix.row
+    .exercise.clearfix.row#description
       div
         span.badge.rounded-pill.bg-primary.float-end.score
 
