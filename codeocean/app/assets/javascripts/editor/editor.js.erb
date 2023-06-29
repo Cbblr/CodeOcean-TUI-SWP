@@ -993,7 +993,6 @@ var CodeOceanEditor = {
                             } else if (editor.data('rfc-interventions')) {
                                 const button = $('#requestComments');
                                 const interventionKey = 'rfcInterventionShown#' + editor.data('exercise-id') + '#' + editor.data('user-id'); // Key for storing intervention flag in localStorage
-                                console.log(interventionKey);
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
                                         $('#rfc_intervention_text').show();
