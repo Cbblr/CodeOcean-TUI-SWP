@@ -87,32 +87,6 @@ $primary:#007ea7;
         color: var(--bs-heading-color,inherit) !important;
     }
 
-    .ace_content, .ace_scroller {
-        background-color: #2e3032;
-        color: darkgray;
-    }
-
-    .ace_content .ace_cursor {
-        color: black;
-    }
-
-    .ace-tomorrow .ace_marker-layer .ace_active-line, .ace-tomorrow .ace_marker-layer .ace_selection {
-        background-color: #27292b
-    }
-
-    .ace-tm .ace_marker-layer .ace_selection {
-        background-color: #27292b;
-    }
-
-    .ace-tm .ace_keyword {
-        color: dodgerblue;
-    }
-
-    .ace_gutter-layer {
-        background-color: #333334;
-        color: #888;
-    }
-
     .bg-light, .bg-white {
         background-color: #2e3032 !important;
     }
@@ -170,5 +144,9 @@ $primary:#007ea7;
 
     a.file-heading {
         color: var(--bs-body-color) !important;
+    }
+
+    .chosen-container .chosen-results {
+        color: white;
     }
 }

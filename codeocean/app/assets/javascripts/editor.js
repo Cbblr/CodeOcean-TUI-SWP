@@ -71,10 +71,14 @@ $(document).on('turbolinks:load', function(event) {
   $(document).ready(function() {
     // Retrieve the theme state from localStorage
     var savedTheme = localStorage.getItem('theme');
+    const editors = CodeOceanEditor.editors;
   
     // Set the initial theme based on the stored state
     if (savedTheme === 'dark') {
       $('body').attr('data-bs-theme', 'dark');
+      editors.forEach(editor => {
+        editor.setTheme('ace/theme/tomorrow_night_eighties');
+      });
       $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
     } else {
       $('body').attr('data-bs-theme', 'light');
@@ -85,13 +89,20 @@ $(document).on('turbolinks:load', function(event) {
   $('#theme-toggle').on('click', function() {
     var body = $('body');
     var icon = $(this).find('i');
-  
+    const editors = CodeOceanEditor.editors;
+    
     if (body.attr('data-bs-theme') === 'dark') {
       body.attr('data-bs-theme', 'light');
       icon.removeClass('fa-sun').addClass('fa-moon');
+      editors.forEach(editor => {
+        editor.setTheme('ace/theme/textmate');
+      });
       localStorage.setItem('theme', 'light'); // Store the theme state in localStorage
     } else {
       body.attr('data-bs-theme', 'dark');
+      editors.forEach(editor => {
+        editor.setTheme('ace/theme/tomorrow_night_eighties');
+      });
       icon.removeClass('fa-moon').addClass('fa-sun');
       localStorage.setItem('theme', 'dark'); // Store the theme state in localStorage
     }

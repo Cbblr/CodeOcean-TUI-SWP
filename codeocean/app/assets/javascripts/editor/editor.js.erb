@@ -492,7 +492,8 @@ var CodeOceanEditor = {
         button.prop('disabled', true);
         button.on('click', function () {
             button.tooltip('hide');
-            $('#rfc_intervention_text').hide()
+            $('#rfc_intervention_text').hide();
+            $('.modal-footer').hide();
             new bootstrap.Modal($('#comment-modal')).show();
         });
 
@@ -996,13 +997,12 @@ var CodeOceanEditor = {
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
                                         $('#rfc_intervention_text').show();
-                                            let modal = $('#comment-modal');
+                                            const modal = $('#comment-modal');
                                         if (!modal.isPresent()) {
                                             // The modal is not present (e.g., because the site was navigated), so we don't continue here.
                                             return;
                                         }
 
-                                        modal = modal.clone();
                                         modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
                                         modal.find('.col').toggleClass('d-none');
                                         modal.on('hidden.bs.modal', function () {
