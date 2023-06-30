@@ -232,6 +232,10 @@ var CodeOceanEditor = {
         $('#content-right-sidebar').height(this.calculateEditorHeight('#content-right-sidebar', false));
     },
 
+    resizeHorizontalResizer: function () {
+        $('#resizerHorizontal').height(this.calculateEditorHeight('#resizerHorizontal', false));
+    },
+
     calculateEditorHeight: function (element, considerStatusbar) {
         const jqueryElement = $(element);
         if (jqueryElement.length === 0) {
@@ -873,8 +877,11 @@ var CodeOceanEditor = {
         $('#output_sidebar_uncollapsed').removeClass('d-none');
         $('#output_sidebar').removeClass('output-col-collapsed').addClass('output-col');
         $('#resizerVertical').removeClass('d-none');
-        $('.panel-top').css('height', '50vh')
-        $('.panel-bottom').css('height', '30vh');
+        $('.panel-top').css('height', '50vh');
+        if (window.matchMedia('(min-width: 768px)').matches) {
+            $('.panel-bottom').css('height', this.calculateEditorHeight('.panel-bottom', false));
+            this.resizeSidebars();
+        }
     },
 
     hideOutputBar: function () {

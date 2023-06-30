@@ -12,7 +12,11 @@
 }
 
 #editor-buttons .btn {
-  margin: 2px;
+  margin-left: 2px;
+}
+
+#editor-buttons span {
+  border-radius: 5px !important;
 }
 
 #editor-column {
@@ -54,8 +58,7 @@
 .panel-top {
   overflow: auto;
   position: relative;
-  height: 50vh;
-  min-height: 30px;
+  min-height: 30vh;
   max-height: 60vh;
 }
 
@@ -197,6 +200,7 @@
   padding-right: 3px;
   box-sizing: border-box;
   margin-left: auto;
+  min-height: 40vh;
 }
 
 .output-col-collapsed {
