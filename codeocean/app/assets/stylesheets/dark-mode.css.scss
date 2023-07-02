@@ -32,7 +32,7 @@ $primary:#007ea7;
         --bs-btn-disabled-bg: #424446;
         --bs-btn-disabled-border-color: #424446;
     }
-    
+
     .table {
         --bs-table-color: var(--bs-body-color);
         --bs-table-bg: #2e3032;
@@ -123,6 +123,16 @@ $primary:#007ea7;
         color: var(--bs-body-color);
         background-color: #2e3032;
         border:1px solid #555;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-choice {
+        background-color: #2e3032;
+        background-image: -webkit-gradient(linear,left top,left bottom,color-stop(20%,#2e3032),color-stop(50%,#2e3032),color-stop(52%,#2e3032),to(#2e3032));
+        background-image: linear-gradient(#2e3032 20%,#2e3032 50%,#2e3032 52%,#2e3032);
+        border: 1px solid #555;
+        -webkit-box-shadow: inset 0 0 2px #555, 0 1px 0 rgba(0,0,0,.05);
+        box-shadow: inset 0 0 2px #555, 0 1px 0 rgba(0,0,0,.05);
+        color: #ffffffdd;
     }
 
     .wmd-preview {
