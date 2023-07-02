@@ -11,4 +11,4 @@ https://docs.google.com/document/d/1Yxeeb_4yxAQJKXmyxzQ8rlha_QlCip4XjBWB8DhN-jo/
 https://miro.com/app/board/uXjVMOBIPYk=/
 
 ## Powerpoint
-https://technischeunivers049-my.sharepoint.com/:p:/g/personal/lisa_streit_tuil_technischeunivers049_onmicrosoft_com/ESWuUGlK11xOnUlvkk91FyABQQm2X4GwoMvetpU--BKLTw?e=yEXG2D
+https://tuilmenau365-my.sharepoint.com/:p:/g/personal/lisa_streit_tu-ilmenau_de/EZs50JdKGMtNpiEgef1mNoMBapqZTDMxJOMlAremCud19g?rtime=lkNbMOt620g
