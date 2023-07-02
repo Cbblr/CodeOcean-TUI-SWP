@@ -149,4 +149,21 @@ $primary:#007ea7;
     .chosen-container .chosen-results {
         color: white;
     }
+
+    .btn-group .dropdown-toggle.btn-secondary ~ .dropdown-menu {
+        background-color: #2d2c2c;
+        border-color: #403f3f;
+    }
+
+    .text-dark {
+        color: white !important;
+    }
+
+    code {
+        background-color: #2d2d2d  !important;
+    }
+
+    .hljs {
+        color: #b3b3af
+    }
 }

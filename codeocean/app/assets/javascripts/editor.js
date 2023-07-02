@@ -81,8 +81,9 @@ $(document).on('turbolinks:load', function(event) {
     if (savedTheme === 'dark') {
       $('body').attr('data-bs-theme', 'dark');
       editors.forEach(editor => {
-        editor.setTheme('ace/theme/tomorrow_night_eighties');
+        editor.setTheme('ace/theme/tomorrow_night_eighties');//set editor theme
       });
+      setTooltipTheme('tomorrow_night_eighties'); // Set tooltip theme
       $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
     } else {
       $('body').attr('data-bs-theme', 'light');
@@ -101,15 +102,25 @@ $(document).on('turbolinks:load', function(event) {
       editors.forEach(editor => {
         editor.setTheme('ace/theme/textmate');
       });
+      setTooltipTheme('textmate');
       localStorage.setItem('theme', 'light'); // Store the theme state in localStorage
     } else {
       body.attr('data-bs-theme', 'dark');
       editors.forEach(editor => {
-        editor.setTheme('ace/theme/tomorrow_night_eighties');
+        editor.setTheme('ace/theme/tomorrow_night_eighties');//set editor theme
       });
+      setTooltipTheme('tomorrow_night_eighties'); // Set tooltip theme
       icon.removeClass('fa-moon').addClass('fa-sun');
       localStorage.setItem('theme', 'dark'); // Store the theme state in localStorage
     }
     return false; // Prevent default link behavior
   });
+
+  function setTooltipTheme(theme) {
+    var tooltipElements = $('.editor.allow_ace_tooltip');
+    tooltipElements.each(function(index, element) {
+      var tooltipEditor = ace.edit(element);
+      tooltipEditor.setTheme('ace/theme/' + theme);
+    });
+  }
 });
