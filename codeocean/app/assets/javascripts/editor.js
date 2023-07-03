@@ -103,6 +103,7 @@ $(document).on('turbolinks:load', function(event) {
         editor.setTheme('ace/theme/textmate');
       });
       setTooltipTheme('textmate');
+      localStorage.setItem('tooltipTheme', 'textmate');
       localStorage.setItem('theme', 'light'); // Store the theme state in localStorage
     } else {
       body.attr('data-bs-theme', 'dark');
@@ -110,6 +111,7 @@ $(document).on('turbolinks:load', function(event) {
         editor.setTheme('ace/theme/tomorrow_night_eighties');//set editor theme
       });
       setTooltipTheme('tomorrow_night_eighties'); // Set tooltip theme
+      localStorage.setItem('tooltipTheme', 'tomorrow_night_eighties');
       icon.removeClass('fa-moon').addClass('fa-sun');
       localStorage.setItem('theme', 'dark'); // Store the theme state in localStorage
     }
