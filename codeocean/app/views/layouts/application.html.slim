@@ -30,7 +30,7 @@ html lang="#{I18n.locale || I18n.default_locale}" data-default-locale="#{I18n.de
           #navbar-collapse.collapse.navbar-collapse
             = render('navigation', cached: true)
             ul.nav.navbar-nav.ms-auto
-              li.nav-item data-bs-theme="dark"
+              li.nav-item
                 a.nav-link#theme-toggle(href='#', role='button')
                   i.fa.fa-moon
               = render('locale_selector', cached: true)

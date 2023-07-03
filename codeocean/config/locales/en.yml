@@ -485,7 +485,7 @@ en:
         listing: Listing the newest comment requests
         request: "Request Comments"
         question: 'Please shortly describe your problem or the program part you would like to get feedback for. Your program code and potential error messages are automatically appended to your request.'
-        doNotShowAgain: "Don't show this again"
+        doNotShowAgain: "Don't show this again (You can still ask for comments using the button)."
       intervention:
         explanation: "This message appears because you have been working on this exercise for %{duration} minutes. 25% of your fellow learners took more time to solve the exercise, so in that sense it's not a problem, but this has proven to be an <a href='https://hpi.de/en/research/publications/dissertations/dissertation-ralf-teusner.html' style='display: contents;' target='_blank' rel='noopener'>effective time for this message</a>."
       rfc_intervention:

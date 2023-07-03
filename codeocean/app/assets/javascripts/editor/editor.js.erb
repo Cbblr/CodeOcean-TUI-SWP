@@ -232,6 +232,10 @@ var CodeOceanEditor = {
         $('#content-right-sidebar').height(this.calculateEditorHeight('#content-right-sidebar', false));
     },
 
+    resizeHorizontalResizer: function () {
+        $('#resizerHorizontal').height(this.calculateEditorHeight('#resizerHorizontal', false));
+    },
+
     calculateEditorHeight: function (element, considerStatusbar) {
         const jqueryElement = $(element);
         if (jqueryElement.length === 0) {
@@ -448,7 +452,7 @@ var CodeOceanEditor = {
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
         if ($('#sidebar-uncollapsed').hasClass('d-none')) {
-            if ($(window).width() >= 767) {
+            if ($(window).width() >= 992) {
                 $('#panel-left').css('width', $('#sidebar-collapsed').outerWidth(true));
             }
             $('#panel-left').css('padding-bottom', '4px');
@@ -456,7 +460,7 @@ var CodeOceanEditor = {
             $('#panel-left').css('width', '');
             $('#panel-left').css('padding-bottom', '');
         }
-        $('#resizerHorizontal').toggleClass('d-md-block');
+        $('#resizerHorizontal').toggleClass('d-lg-block');
     },
 
     initializeRegexes: function () {
@@ -492,7 +496,8 @@ var CodeOceanEditor = {
         button.prop('disabled', true);
         button.on('click', function () {
             button.tooltip('hide');
-            $('#rfc_intervention_text').hide()
+            $('#rfc_intervention_text').hide();
+            $('.modal-footer').hide();
             new bootstrap.Modal($('#comment-modal')).show();
         });
 
@@ -872,9 +877,16 @@ var CodeOceanEditor = {
         $('#output_sidebar_collapsed').addClass('d-none');
         $('#output_sidebar_uncollapsed').removeClass('d-none');
         $('#output_sidebar').removeClass('output-col-collapsed').addClass('output-col');
-        $('#resizerVertical').removeClass('d-none');
-        $('.panel-top').css('height', '50vh')
-        $('.panel-bottom').css('height', '30vh');
+        if (window.matchMedia('(min-width: 992px)').matches) {
+            $('.panel-top').css('height', '50vh');
+            $('.panel-bottom').css('height', this.calculateEditorHeight('.panel-bottom', false));
+            this.resizeSidebars();
+            $('#resizerVertical').removeClass('d-none');
+        } else {
+            $('.panel-bottom').css('height', '50vh');
+            $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 250);  
+        }
+        this.resizeAceEditors();
     },
 
     hideOutputBar: function () {
@@ -883,7 +895,12 @@ var CodeOceanEditor = {
         $('#output_sidebar').removeClass('output-col').addClass('output-col-collapsed');
         $('#resizerVertical').addClass('d-none');
         $('.panel-bottom').css('height', $('#output_sidebar_collapsed').height() + 'px');
-        $('.panel-top').css('height', ($('#editor-column').height() - $('.panel-bottom').height()) + "px");
+        if (window.matchMedia('(min-width: 992px)').matches) {
+            $('.panel-top').css('height', ($('#editor-column').height() - $('.panel-bottom').height()) + "px");
+        }  else {
+           $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 1);
+        }
+        this.resizeAceEditors();
     },
 
     initializeSideBarTooltips: function () {
@@ -993,29 +1010,27 @@ var CodeOceanEditor = {
                             } else if (editor.data('rfc-interventions')) {
                                 const button = $('#requestComments');
                                 const interventionKey = 'rfcInterventionShown#' + editor.data('exercise-id') + '#' + editor.data('user-id'); // Key for storing intervention flag in localStorage
-                                console.log(interventionKey);
                                 // only show intervention if user did not requested for a comment already
                                 if (!button.prop('disabled')) {
-                                        $('#rfc_intervention_text').show();
-                                            let modal = $('#comment-modal');
-                                        if (!modal.isPresent()) {
-                                            // The modal is not present (e.g., because the site was navigated), so we don't continue here.
-                                            return;
-                                        }
+                                    $('#rfc_intervention_text').show();
+                                    const modal = $('#comment-modal');
+                                    if (!modal.isPresent()) {
+                                        // The modal is not present (e.g., because the site was navigated), so we don't continue here.
+                                        return;
+                                    }
 
-                                        modal = modal.clone();
-                                        modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
-                                        modal.find('.col').toggleClass('d-none');
-                                        modal.on('hidden.bs.modal', function () {
-                                            modal.find('.modal-footer').text('');
-                                        }); 
-                                        modal.find('#flexCheckChecked').on('change', function(event){
-                                            localStorage.setItem(interventionKey, event.target.checked); // Check if intervention has been shown before
-                                        });
-                                        
-                                        if(localStorage.getItem(interventionKey) === 'true'){
-                                            return;
-                                        }
+                                    modal.find('.footer-content').html(I18n.t("exercises.implement.intervention.explanation", {duration: Math.round(percentile75 / 60)}));
+                                    modal.find('.col').toggleClass('d-none');
+                                    modal.on('hidden.bs.modal', function () {
+                                        modal.find('.modal-footer').text('');
+                                    }); 
+                                    $(document).on('change', '#flexCheckChecked', function(event) {
+                                        localStorage.setItem(interventionKey, event.target.checked); // Save the checkbox state to localStorage
+                                    });
+                                    
+                                    if(localStorage.getItem(interventionKey) === 'true'){
+                                        return;
+                                    }
                                     new bootstrap.Modal(modal).show();
                                     $.ajax({
                                         data: {

@@ -5,6 +5,20 @@
   display: flex;
 }
 
+
+
+.btn, #description, #content-left-sidebar, #content-right-sidebar {
+  border-radius: 5px !important;
+}
+
+#editor-buttons .btn {
+  margin-left: 2px;
+}
+
+#editor-buttons span {
+  border-radius: 5px !important;
+}
+
 #editor-column {
   max-height: 85vh;
 }
@@ -44,8 +58,7 @@
 .panel-top {
   overflow: auto;
   position: relative;
-  height: 50vh;
-  min-height: 30px;
+  min-height: 30vh;
   max-height: 60vh;
 }
 
@@ -187,6 +200,7 @@
   padding-right: 3px;
   box-sizing: border-box;
   margin-left: auto;
+  min-height: 40vh;
 }
 
 .output-col-collapsed {
