@@ -32,6 +32,7 @@ $(document).on('turbolinks:load', function(event) {
 
   function mouseMoveHorizontal(event) {
     if (isMouseDownHorizontal === 1 && event.clientX <= 0.7 * window.innerWidth && event.clientX >= 0.2 * window.innerWidth) {
+      event.preventDefault();
       $('#panel-left').css('width', (event.clientX - $('#panel-left').offset().left) + "px")
       CodeOceanEditor.resizeSidebars()
       CodeOceanEditor.resizeHorizontalResizer()
@@ -57,6 +58,7 @@ $(document).on('turbolinks:load', function(event) {
 
   function mouseMoveVertical(event) {
     if (isMouseDownVertical === 1) {
+      event.preventDefault();
       $('.panel-top').css('height', (event.clientY - $('.panel-top').offset().top - $('#statusbar').height()) + "px")
       $('.panel-bottom').height(CodeOceanEditor.calculateEditorHeight('.panel-bottom', false));
       CodeOceanEditor.resizeSidebars()

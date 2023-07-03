@@ -452,7 +452,7 @@ var CodeOceanEditor = {
         $('#sidebar-collapsed').toggleClass('d-none');
         $('#sidebar-uncollapsed').toggleClass('d-none');
         if ($('#sidebar-uncollapsed').hasClass('d-none')) {
-            if ($(window).width() >= 767) {
+            if ($(window).width() >= 992) {
                 $('#panel-left').css('width', $('#sidebar-collapsed').outerWidth(true));
             }
             $('#panel-left').css('padding-bottom', '4px');
@@ -460,7 +460,7 @@ var CodeOceanEditor = {
             $('#panel-left').css('width', '');
             $('#panel-left').css('padding-bottom', '');
         }
-        $('#resizerHorizontal').toggleClass('d-md-block');
+        $('#resizerHorizontal').toggleClass('d-lg-block');
     },
 
     initializeRegexes: function () {
@@ -877,12 +877,16 @@ var CodeOceanEditor = {
         $('#output_sidebar_collapsed').addClass('d-none');
         $('#output_sidebar_uncollapsed').removeClass('d-none');
         $('#output_sidebar').removeClass('output-col-collapsed').addClass('output-col');
-        $('#resizerVertical').removeClass('d-none');
-        $('.panel-top').css('height', '50vh');
-        if (window.matchMedia('(min-width: 768px)').matches) {
+        if (window.matchMedia('(min-width: 992px)').matches) {
+            $('.panel-top').css('height', '50vh');
             $('.panel-bottom').css('height', this.calculateEditorHeight('.panel-bottom', false));
             this.resizeSidebars();
+            $('#resizerVertical').removeClass('d-none');
+        } else {
+            $('.panel-bottom').css('height', '50vh');
+            $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 250);  
         }
+        this.resizeAceEditors();
     },
 
     hideOutputBar: function () {
@@ -891,7 +895,12 @@ var CodeOceanEditor = {
         $('#output_sidebar').removeClass('output-col').addClass('output-col-collapsed');
         $('#resizerVertical').addClass('d-none');
         $('.panel-bottom').css('height', $('#output_sidebar_collapsed').height() + 'px');
-        $('.panel-top').css('height', ($('#editor-column').height() - $('.panel-bottom').height()) + "px");
+        if (window.matchMedia('(min-width: 992px)').matches) {
+            $('.panel-top').css('height', ($('#editor-column').height() - $('.panel-bottom').height()) + "px");
+        }  else {
+           $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 1);
+        }
+        this.resizeAceEditors();
     },
 
     initializeSideBarTooltips: function () {
