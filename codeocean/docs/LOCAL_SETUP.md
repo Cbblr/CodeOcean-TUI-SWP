@@ -1,6 +1,6 @@
 # Local Setup CodeOcean with Poseidon
 
-**This Setup Guide is an adapted version of the original Local Setup Guide provided by the creators of CodeOcean. It contains several sections, that have been revised to simplify the installation on devices running macOS. Additionally, a Local Setup Guide for devices running on Windows has been added. Those parts, that are describing the installation on devices running on Linux, have not been adapted.**
+**This Setup Guide is an adapted version of the original Local Setup Guide provided by the creators of CodeOcean (https://github.com/openHPI/codeocean.git). It contains several sections, that have been revised to simplify the installation on devices running macOS. Additionally, a Local Setup Guide for devices running on Windows has been added. Those parts, that are describing the installation on devices running on Linux, have not been adapted.**
 
 CodeOcean is built as a micro service architecture and requires multiple components to work. Besides the main CodeOcean web application with a PostgreSQL database, a custom-developed Go service called [Poseidon](https://github.com/openHPI/poseidon) is required to allow code execution. Poseidon manages so-called Runners, which are responsible for running learners code. It is executed in (Docker) containers managed through Nomad. The following document will guide you through the setup of CodeOcean with all aforementioned components.
 
@@ -148,12 +148,12 @@ You may either clone the repository via SSH (recommended) or HTTPS (hassle-free 
 
 **SSH (recommended, requires initial setup):**
 ```shell
-git clone git@github.com:openHPI/codeocean.git
+git clone git@gitlab.tu-ilmenau.de:mawe5834/swp2023-thema14.git
 ```
 
 **HTTPS (easier for read operations):**
 ```shell
-git clone https://github.com/openHPI/codeocean.git
+git clone https://gitlab.tu-ilmenau.de/mawe5834/swp2023-thema14.git
 ```
 
 &nbsp;
