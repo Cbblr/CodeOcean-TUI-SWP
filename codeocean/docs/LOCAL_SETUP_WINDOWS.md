@@ -122,22 +122,8 @@ nvm alias default lts/hydrogen
 
 ### Clone the repository:
 
-You may either clone the repository via SSH (recommended) or HTTPS (hassle-free for read operations). If you haven't set up GitHub with your SSH key, you might follow [their official guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
-
-
-
-**SSH (recommended, requires initial setup):**
-
 ```shell
-git clone git@github.com:openHPI/codeocean.git
-```
-
-
-
-**HTTPS (easier for read operations):**
-
-```shell
-git clone https://github.com/openHPI/codeocean.git
+git clone https://gitlab.tu-ilmenau.de/mawe5834/swp2023-thema14/
 ```
 ### Switch current working directory
 
