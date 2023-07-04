@@ -22,8 +22,6 @@ class TestingFrameworkAdapter
   private :parse_output
 
   def test_outcome(output)
-    File.write("adapter_output_raw.txt", output)
-    File.write("adapter_output_regEx.txt", parse_output(output))
     augment_output(parse_output(output))
   end
 end
