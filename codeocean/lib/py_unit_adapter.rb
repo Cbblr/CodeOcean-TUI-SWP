@@ -6,7 +6,7 @@ class PyUnitAdapter < TestingFrameworkAdapter
   ERRORS_REGEXP = /FAILED \(.*errors=(\d+).*\)/
   ASSERTION_ERROR_REGEXP = /^(ERROR|FAIL):\ (.*?)\ .*?^[^.\n]*?(Error|Exception):\s((\s|\S)*?)(>>>[^>]*?)*\s\s(-|=){70}/m
   #regex to catch bad errors hindering code execution
-  BAD_ERROR_REGEXP = /File\s\"\/[^\/]*\/(.*)\"(?:.*)line\s(\d+)\s*(?:.*)\s*(?:\^*)\s*(SyntaxError|IndentationError|TabError):(.*)/
+  BAD_ERROR_REGEXP = /File\s\"(.*)\"(?:.*)line\s(\d+)\s*(?:.*)\s*(?:\^*)\s*(SyntaxError|IndentationError|TabError):(.*)/
 
   def self.framework_name
     'PyUnit'
@@ -50,7 +50,6 @@ class PyUnitAdapter < TestingFrameworkAdapter
       Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
       bad_error_matches = []
     end
-
     #add bad errors to normal error array
     {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank+bad_error_matches}
   end
