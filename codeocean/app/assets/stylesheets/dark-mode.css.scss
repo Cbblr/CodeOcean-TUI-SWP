@@ -154,6 +154,18 @@ $primary:#007ea7;
         color: var(--bs-body-color);
     }
 
+    .form-control.markdown {
+        background-color: #2D2D2D;
+
+        .ace_gutter{
+            color: #CCC;
+        }
+        
+        .ace_layer.ace_gutter-layer.ace_folding-enabled{
+            background-color: #2b2a2a;
+        }
+    }
+
     a.file-heading {
         color: var(--bs-body-color) !important;
     }

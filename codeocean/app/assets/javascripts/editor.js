@@ -75,29 +75,44 @@ $(document).on('turbolinks:load', function(event) {
   }
   
   $(document).ready(function() {
-    // Retrieve the theme state from localStorage
-    var savedTheme = localStorage.getItem('theme');
-    const editors = CodeOceanEditor.editors;
-  
-    // Set the initial theme based on the stored state
-    if (savedTheme === 'dark') {
-      $('body').attr('data-bs-theme', 'dark');
-      editors.forEach(editor => {
-        editor.setTheme('ace/theme/tomorrow_night_eighties');//set editor theme
-      });
-      setTooltipTheme('tomorrow_night_eighties'); // Set tooltip theme
-      $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
-    } else {
-      $('body').attr('data-bs-theme', 'light');
-      $('#theme-toggle i').removeClass('fa-sun').addClass('fa-moon');
-    }
-  });
+  // Retrieve the theme state from localStorage
+  var savedTheme = localStorage.getItem('theme');
+  var savedTooltipTheme = localStorage.getItem('tooltipTheme');
+  const editors = CodeOceanEditor.editors;
 
+  // Set the initial theme based on the stored state
+  if (savedTheme === 'dark') {
+    $('body').attr('data-bs-theme', 'dark');
+    editors.forEach(editor => {
+      editor.setTheme('ace/theme/tomorrow_night_eighties');
+    });
+    setTimeout(function() {
+      setTooltipTheme('tomorrow_night_eighties');
+    }, 500); // Delay the tooltip theme setting
+    $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
+  } else {
+    $('body').attr('data-bs-theme', 'light');
+    editors.forEach(editor => {
+      editor.setTheme('ace/theme/textmate');
+    });
+    setTimeout(function() {
+      setTooltipTheme('textmate');
+    }, 500); // Delay the tooltip theme setting
+    $('#theme-toggle i').removeClass('fa-sun').addClass('fa-moon');
+  }
+
+  if (savedTooltipTheme) {
+    setTimeout(function() {
+      setTooltipTheme(savedTooltipTheme);
+    }, 500); // Delay the tooltip theme setting
+  }
+});
+  
   $('#theme-toggle').on('click', function() {
     var body = $('body');
     var icon = $(this).find('i');
     const editors = CodeOceanEditor.editors;
-    
+  
     if (body.attr('data-bs-theme') === 'dark') {
       body.attr('data-bs-theme', 'light');
       icon.removeClass('fa-sun').addClass('fa-moon');
@@ -110,21 +125,26 @@ $(document).on('turbolinks:load', function(event) {
     } else {
       body.attr('data-bs-theme', 'dark');
       editors.forEach(editor => {
-        editor.setTheme('ace/theme/tomorrow_night_eighties');//set editor theme
+        editor.setTheme('ace/theme/tomorrow_night_eighties');
       });
-      setTooltipTheme('tomorrow_night_eighties'); // Set tooltip theme
+      setTooltipTheme('tomorrow_night_eighties');
       localStorage.setItem('tooltipTheme', 'tomorrow_night_eighties');
       icon.removeClass('fa-moon').addClass('fa-sun');
-      localStorage.setItem('theme', 'dark'); // Store the theme state in localStorage
+      localStorage.setItem('theme', 'dark');
     }
+  
     return false; // Prevent default link behavior
   });
-
+  
+  // Function to set the tooltip theme
   function setTooltipTheme(theme) {
     var tooltipElements = $('.editor.allow_ace_tooltip');
     tooltipElements.each(function(index, element) {
       var tooltipEditor = ace.edit(element);
       tooltipEditor.setTheme('ace/theme/' + theme);
     });
-  }
+  
+    // Store the theme in local storage
+    localStorage.setItem('tooltipTheme', theme);
+  }  
 });
