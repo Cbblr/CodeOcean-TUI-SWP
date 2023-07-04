@@ -13,7 +13,6 @@ class PyUnitAdapter < TestingFrameworkAdapter
   end
 
   def parse_output(output)
-    File.write("outputtest.txt",output[:stderr])
     # PyUnit is expected to print test results on Stderr!
     count = output[:stderr].scan(COUNT_REGEXP).try(:last).try(:first).try(:to_i) || 0
     failed = output[:stderr].scan(FAILURES_REGEXP).try(:last).try(:first).try(:to_i) || 0
@@ -51,10 +50,7 @@ class PyUnitAdapter < TestingFrameworkAdapter
       Sentry.capture_message({stderr: output[:stderr], regex: BAD_ERROR_REGEXP}.to_json)
       bad_error_matches = []
     end
-    
-    #test files
-    File.write("RegExTest.txt",bad_error_matches)
-    File.write("comparison.txt",assertion_error_matches.flatten.compact_blank)
+
     #add bad errors to normal error array
     {count:, failed: failed + errors, error_messages: assertion_error_matches.flatten.compact_blank+bad_error_matches}
   end
