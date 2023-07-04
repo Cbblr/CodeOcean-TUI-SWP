@@ -946,7 +946,7 @@ de:
     bad: "weniger hilfreich"
     very_bad: "gar nicht hilfreich"
     user_error_feedback: "Das Fehlerfeedback war:"
-    user_error_feedback_text: "Warum habe ich das Fehlerfeedback so bewertet? (Bitte nur bei negativer Bewertung der vorigen Frage ausfüllen.)"
+    user_error_feedback_text: "Warum habe ich das Fehlerfeedback so bewertet? (Bitte nur bei negativer Bewertung der vorigen Frage ausfüllen.):"
     estimated_time_less_5: "weniger als 5 Minuten"
     estimated_time_5_to_10: "zwischen 5 und 10 Minuten"
     estimated_time_10_to_20: "zwischen 10 und 20 Minuten"
