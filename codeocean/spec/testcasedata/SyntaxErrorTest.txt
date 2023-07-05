@@ -19,7 +19,7 @@ Traceback (most recent call last):
     module = __import__('.'.join(parts_copy))
   File "/workspace/exercise_tests.py", line 1, in <module>
     from exercise import *
-  File "/workspace/exercise.py", line 2
-    ef(x%2==0):
-              ^
+  File "/workspace/exercise.py", line 1
+    ef even(x):
+          ^
 SyntaxError: invalid syntax

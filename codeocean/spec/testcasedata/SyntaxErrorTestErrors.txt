@@ -1,1 +1,1 @@
-["<span style=\"color:red\">**SyntaxError**</span>: invalid syntax in **file** exercise.py **line 2**"]
+["<span style=\"color:red\">**SyntaxError**</span>: invalid syntax in **file** /workspace/exercise.py **line 1**"]

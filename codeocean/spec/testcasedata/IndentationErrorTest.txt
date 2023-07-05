@@ -19,7 +19,7 @@ Traceback (most recent call last):
     module = __import__('.'.join(parts_copy))
   File "/workspace/exercise_tests.py", line 1, in <module>
     from exercise import *
-  File "/workspace/exercise.py", line 3
-    return 1
-         ^
+  File "/workspace/exercise.py", line 2
+    if(x%2)==0:
+     ^
 IndentationError: expected an indented block
